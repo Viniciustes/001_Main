@@ -48,7 +48,7 @@ namespace CTJEvaluation001.Infra.Data.Repositories
 
         public IEnumerable<Course> GetCourseParticipated(int[] coursesList, Observed observed, int contextoAno)
         {
-            IList<Course> courses = new List<Course>();
+            var courses = new List<Course>();
 
             for (int i = 0; i < coursesList.Length; i++)
             {
