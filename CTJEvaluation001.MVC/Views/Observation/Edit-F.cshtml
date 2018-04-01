@@ -1,0 +1,458 @@
+﻿@model CTJEvaluation001.MVC.ViewModels.ObservationViewModel
+
+@{
+    ViewBag.Title = "Observation";
+
+    var complianceToRulesAndProcedures = Model.Competences.Where(x => x.Id == "007.F").Single();
+    var testsDates = complianceToRulesAndProcedures.Performances.Where(x => x.Id == "007.F.01").Single();
+    var gradesheetsDates = complianceToRulesAndProcedures.Performances.Where(x => x.Id == "007.F.02").Single();
+    var gradesheetsPreenchimento = complianceToRulesAndProcedures.Performances.Where(x => x.Id == "007.F.03").Single();
+    var attendanceFaltasJustificadas = complianceToRulesAndProcedures.Performances.Where(x => x.Id == "007.F.04.1").Single();
+    var attendanceFaltasNaoJustificadas = complianceToRulesAndProcedures.Performances.Where(x => x.Id == "007.F.04.2").Single();
+    var punctuality = complianceToRulesAndProcedures.Performances.Where(x => x.Id == "007.F.05").Single();
+    var institutionalProcedures = complianceToRulesAndProcedures.Performances.Where(x => x.Id == "007.F.06").Single();
+    var boletinsContatoPais = complianceToRulesAndProcedures.Performances.Where(x => x.Id == "007.F.07").Single();
+}
+
+@using (Html.BeginForm("SaveF", "Observation"))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" value="@Model.CodAvaliacao" name="CodAvaliacao" />
+    <input type="hidden" value="@Model.ObserverId" name="ChapaAvaliador" />
+    <input type="hidden" value="@Model.ObservedId" name="ChapaAvaliado" />
+    <header class="page-content-header">
+        <div class="container-fluid">
+            
+            <div class="tbl">
+                <div class="tbl-row">
+                    <div class="tbl-cell">
+                        <a href="@Url.Action("Index", "Observation")" class="btn btn-primary btn-rounded">
+                            <span class="glyphicon glyphicon-arrow-left"></span>
+                        </a>
+                    </div>
+                    <div class="tbl-cell">
+                        <h4>@Html.DisplayFor(model => model.Name)</h4>
+                    </div>
+                    <div class="tbl-cell text-right">
+                        <a class="btn btn-sm btn-secondary btn-rounded" data-toggle="tooltip" data-placement="top"
+                                title="Print" href="/Observation/Print/@Model.Id" target="_blank">
+                            <span class="glyphicon glyphicon-print"></span>
+                        </a>
+                    </div>
+                </div>                
+            </div>
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["Error"]
+                </div>
+            }
+        </div>
+    </header>
+    <div class="container-fluid">
+        <div class="box-typical box-typical-padding">
+            <div class="row">
+                <div class="col-md-8 col-sm-6">
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <h6 style="margin-top: 0px; text-align: right;" class="m-t-lg">
+                        Status:
+                        @{
+                            if (Model.Status == 1)
+                            {
+                                <span class="label label-success">
+                                    <span class="glyphicon glyphicon-thumbs-up"></span>
+                                </span>
+                            }
+                            else if (Model.Status == 2)
+                            {
+                                <span class="label label-danger">
+                                    <span class="glyphicon glyphicon-thumbs-down"></span>
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="label label-warning">
+                                    <span class="glyphicon glyphicon-thumbs-up"></span>
+                                </span>
+                            }
+                        }
+                    </h6>
+                </div>
+            </div>
+            <h6 class="with-border"></h6>
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="avaliador_nome">Observer</label>
+                        <input type="text" class="form-control" id="avaliador_nome" placeholder="" disabled="" value="@Html.DisplayFor(model => model.Observer.Name)">
+                    </fieldset>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="avaliado_nome">Observed</label>
+                        <input type="text" class="form-control" id="avaliado_nome" placeholder="" disabled=""
+                               value="@Html.DisplayFor(model => model.Observed.Name)">
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        
+        @foreach (var item in Model.Competences.Take(6))
+        {
+            <div class="box-typical box-typical-padding">
+                <h6 style="margin-top: 0px;" class="m-t-lg with-border" id="q4">
+                    @item.Id.Replace("0", "").Replace(".F", "") - @item.Name.Substring(4, item.Name.Length - 4)
+                </h6>
+                @foreach (var perf in item.Performances)
+                {
+                    <div class="row question-item">
+                        <div class="col-md-12 col-sm-6">
+                            <fieldset class="form-group">
+                                @*<label class="form-label" for="@perf.Id">@perf.Name</label>*@
+
+                                @foreach (var escala in Model.Escalas.Take(8))
+                                {
+                                    <div class="col-md-4 col-sm-6" style="margin-top: 5px;">
+                                        <div class="radio">
+                                            <input type="radio"
+                                                   name="@item.Name.Substring(0, 1)@item.Id.Replace("0", "").Replace(".F", "")"
+                                                   id="@($"{escala.Name.Replace(" ", "")}-1-{perf.Id.Replace(" ", "")}")"
+                                                   value="@escala.Id"
+                                                   @if (perf.Value == escala.Id) { <text> checked="checked" </text> } @if (Model.Status != 2 && Model.Status != 3) { <text>disabled="disabled"</text> }>                                            
+                                            <label for="@($"{escala.Name.Replace(" ", "")}-1-{perf.Id.Replace(" ", "")}")">@escala.Name</label>
+                                        </div>
+                                    </div>
+                                }
+                            </fieldset>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+        <div class="box-typical box-typical-padding">
+            <h6 style="margin-top: 0px;" class="m-t-lg with-border" id="q4">
+                @complianceToRulesAndProcedures.Id.Replace("0", "").Replace(".F", "") - @complianceToRulesAndProcedures.Name.Substring(4, complianceToRulesAndProcedures.Name.Length - 4)
+            </h6>
+            <div class="row question-item">
+                <div class="col-md-12 col-sm-6">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="007.F.01">7.1 - Tests - Dates</label>
+
+                        <div class="col-md-12 col-sm-12">
+                            <div class="radio">
+                                <input type="radio" name="G1" id="A-1-007.F.01" value="9" @if(testsDates.Value == 9) { <text> checked </text> }>
+                                <label for="A-1-007.F.01">A - Devolveu todos os envelopes de testes nas datas estipuladas ou teve até dois atrasos que não ultrapassaram cinco dias cada.</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-6">
+                            <div class="radio">
+                                <input type="radio" name="G1" id="B-1-007.F.01" value="10" @if(testsDates.Value == 10) { <text> checked </text> }>
+                                <label for="B-1-007.F.01">B - Teve um ou dois atrasos de seis a nove dias ou entre três e cinco atrasos  de até dez dias cada na entrega do(s) envelope(s) de prova(s).</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-6">
+                            <div class="radio">
+                                <input type="radio" name="G1" id="C-1-007.F.01" value="11" @if(testsDates.Value == 11) { <text> checked </text> }>
+                                <label for="C-1-007.F.01">C - Teve seis ou mais atrasos de até dez dias cada,  ou um ou mais atrasos superiores a dez dias, ou ainda perdeu prova(s).</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+
+            <div class="row question-item">
+                <div class="col-md-12 col-sm-6">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="007.F.02">7.2 - Gradesheets - Dates</label>
+
+                        <div class="col-md-12 col-sm-6">
+                            <div class="radio">
+                                <input type="radio" name="G2" id="A-1-007.F.02" value="9" @if(gradesheetsDates.Value == 9) { <text> checked </text> }>
+                                <label for="A-1-007.F.02">A - Entregou todos os espelhos de notas para a secretaria nas datas estipuladas ou teve até dois atrasos de até dois dias.</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-6">
+                            <div class="radio">
+                                <input type="radio" name="G2" id="B-1-007.F.02" value="10" @if(gradesheetsDates.Value == 10) { <text> checked </text> }>
+                                <label for="B-1-007.F.02">B - Teve entre três e cinco atrasos de até dois dias úteis na entrega do(s) espelho(s) de notas.</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-6">
+                            <div class="radio">
+                                <input type="radio" name="G2" id="C-1-007.F.02" value="11" @if(gradesheetsDates.Value == 11) { <text> checked </text> }>
+                                <label for="C-1-007.F.02">C - Teve seis ou mais atrasos na entrega dos espelhos de notas ou qualquer atraso superior a dois dias.</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+
+            <div class="row question-item">
+                <div class="col-md-12 col-sm-6">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="007.F.03">7.3 - Gradesheets - Preenchimento</label>
+                        <p>O Professor devolveu os Diarios de Classe:</p>
+
+                        <div class="col-md-12 col-sm-6">
+                            <div class="radio">
+                                <input type="radio" name="G3" id="A-1-007.F.03" value="9" @if(gradesheetsPreenchimento.Value == 9) { <text> checked </text> }>
+                                <label for="A-1-007.F.03">A - E os preencheu de forma correta.</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-6">
+                            <div class="radio">
+                                <input type="radio" name="G3" id="B-1-007.F.03" value="10" @if(gradesheetsPreenchimento.Value == 10) { <text> checked </text> }>
+                                <label for="B-1-007.F.03">B - Mas apresentou irregularidades no seu preenchimento em uma ou duas turmas.</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-6">
+                            <div class="radio">
+                                <input type="radio" name="G3" id="C-1-007.F.03" value="11" @if(gradesheetsPreenchimento.Value == 11) { <text> checked </text> }>
+                                <label for="C-1-007.F.03">C - Mas apresentou irregularidades em mais de duas turmas.</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+
+            <div class="row question-item">
+                <div class="col-md-12 col-sm-6">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="007.F.04.1">7.4.1 - Attendance - Faltas Justificadas</label>
+
+                        <div class="col-md-12 col-sm-6">
+                            <div class="radio">
+                                <input type="radio" name="G41" id="A-1-007.F.04.1" value="9" @if(attendanceFaltasJustificadas.Value == 9) { <text> checked </text> }>
+                                <label for="A-1-007.F.04.1">A - Teve de zero a cinco  dias de faltas justificadas e/ou licença nojo e/ou jurídica</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-6">
+                            <div class="radio">
+                                <input type="radio" name="G41" id="B-1-007.F.04.1" value="10" @if(attendanceFaltasJustificadas.Value == 10) { <text> checked </text> }>
+                                <label for="B-1-007.F.04.1">B - Teve de seis a oito dias de faltas justificadas. </label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-6">
+                            <div class="radio">
+                                <input type="radio" name="G41" id="C-1-007.F.04.1" value="11" @if(attendanceFaltasJustificadas.Value == 11) { <text> checked </text> }>
+                                <label for="C-1-007.F.04.1">C - Teve de nove a quinze dias de faltas justificadas.</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-6">
+                            <div class="radio">
+                                <input type="radio" name="G41" id="D-1-007.F.04.1" value="12" @if(attendanceFaltasJustificadas.Value == 12) { <text> checked </text> }>
+                                <label for="D-1-007.F.04.1">D - Teve mais de quinze dias de faltas justificadas. </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+
+            <div class="row question-item">
+                <div class="col-md-12 col-sm-6">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="007.F.04.2">7.4.2 - Attendance - Faltas não justificada</label>
+
+                        <div class="col-md-12 col-sm-6">
+                            <div class="radio">
+                                <input type="radio" name="G42" id="A-1-007.F.04.2" value="9" @if(attendanceFaltasNaoJustificadas.Value == 9) { <text> checked </text> }>
+                                <label for="A-1-007.F.04.2">A - Não teve nenhuma falta não justificada.</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-6">
+                            <div class="radio">
+                                <input type="radio" name="G42" id="B-1-007.F.04.2" value="10" @if(attendanceFaltasJustificadas.Value == 10) { <text> checked </text> }>
+                                <label for="B-1-007.F.04.2">B - Teve até cinco dias de faltas não justificadas.</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-6">
+                            <div class="radio">
+                                <input type="radio" name="G42" id="C-1-007.F.04.2" value="11" @if(attendanceFaltasJustificadas.Value == 11) { <text> checked </text> }>
+                                <label for="C-1-007.F.04.2">C - Teve mais de cinco dias de faltas não justificadas.</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+
+            <div class="row question-item">
+                <div class="col-md-12 col-sm-6">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="007.F.05">7.5 - Punctuality</label>
+                        <p>O Professor:</p>
+
+                        <div class="col-md-12 col-sm-6">
+                            <div class="radio">
+                                <input type="radio" name="G5" id="A-1-007.F.05" value="9" @if(punctuality.Value == 9) { <text> checked </text> }>
+                                <label for="A-1-007.F.05">A - Foi pontual ou teve até dois pequenos atrasos durante todo o ano, ou teve um atraso significativo.</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-6">
+                            <div class="radio">
+                                <input type="radio" name="G5" id="B-1-007.F.05" value="10" @if(attendanceFaltasJustificadas.Value == 10) { <text> checked </text> }>
+                                <label for="B-1-007.F.05">B - Teve entre três e cinco atrasos, sendo no máximo um significativo.</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-6">
+                            <div class="radio">
+                                <input type="radio" name="G5" id="C-1-007.F.05" value="11" @if(attendanceFaltasJustificadas.Value == 11) { <text> checked </text> }>
+                                <label for="C-1-007.F.05">C - Teve seis ou mais atrasos durante todo o ano ou dois atrasos significativos.</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+
+            <div class="row question-item">
+                <div class="col-md-12 col-sm-6">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="007.F.06">7.6 - Institutional Procedures</label>
+
+                        <div class="col-md-12 col-sm-6">
+                            <div class="radio">
+                                <input type="radio" name="G6" id="A-1-007.F.06" value="9" @if(institutionalProcedures.Value == 9) { <text> checked </text> }>
+                                <label for="A-1-007.F.06">A - O professor sempre seguiu e reforçou em sala de aula os regulamentos institucionais.</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-6">
+                            <div class="radio">
+                                <input type="radio" name="G6" id="B-1-007.F.06" value="10" @if(attendanceFaltasJustificadas.Value == 10) { <text> checked </text> }>
+                                <label for="B-1-007.F.06">B - Foram observadas  entre uma e três situações em que o professor não seguiu ou reforçou os regulamentos institucionais ou um evento com sérias consequências.</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-6">
+                            <div class="radio">
+                                <input type="radio" name="G6" id="C-1-007.F.06" value="11" @if(attendanceFaltasJustificadas.Value == 11) { <text> checked </text> }>
+                                <label for="C-1-007.F.06">C - Foram observadas mais de quatro situações em que o professor não seguiu ou reforçou os regulamentos institucionais.</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+
+            <div class="row question-item">
+                <div class="col-md-12 col-sm-6">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="007.F.07">7.7 - Boletins / contato com os pais</label>
+
+                        <div class="col-md-12 col-sm-6">
+                            <div class="radio">
+                                <input type="radio" name="G7" id="A-1-007.F.07" value="9" @if(boletinsContatoPais.Value == 9) { <text> checked </text> }>
+                                <label for="A-1-007.F.07">A - Seguiu os procedimentos referentes ao recolhimento dos boletins dos alunos e contato com os pais de alunos com notas baixas e/ou problemas de comportamento.</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-6">
+                            <div class="radio">
+                                <input type="radio" name="G7" id="B-1-007.F.07" value="10" @if(boletinsContatoPais.Value == 10) { <text> checked </text> }>
+                                <label for="B-1-007.F.07">B - Seguiu os procedimentos acima, mas pode ter falhado em contatar um ou outro pai ou responsável quando necessário, mas sem grandes repercussões negativas para a escola.</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-6">
+                            <div class="radio">
+                                <input type="radio" name="G7" id="C-1-007.F.07" value="11" @if(boletinsContatoPais.Value == 11) { <text> checked </text> }>
+                                <label for="C-1-007.F.07">C - Deixou de recolher boletins e/ou contatar os pais quando necessário, o que acarretou em repercussões negativas para a escola. </label>
+                            </div>
+                        </div>
+                        
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+
+        @foreach (var item in Model.Competences.Where(x => x.Id == "008.F"))
+        {
+            <div class="box-typical box-typical-padding">
+                <h6 style="margin-top: 0px;" class="m-t-lg with-border" id="q4">
+                    @item.Id.Replace("0", "").Replace(".F", "") - @item.Name.Substring(4, item.Name.Length - 4)
+                </h6>
+                @{
+                    int i = 1;
+                }
+                @foreach (var perf in item.Performances.Where(x => x.Id != "008.F.10" && x.Id != "008.F.06" && x.Id != "008.F.07"))
+                {
+                    <div class="row question-item">
+                        <div class="col-md-12 col-sm-6">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="@perf.Id">8.@i - @perf.Name</label>
+
+                                <div class="col-md-12 col-sm-12">
+                                    @*<input class="form-control" type="text" name="@("H"+i)" id="" value="" maxlength="120">*@
+                                    <textarea rows="7" class="form-control" placeholder="" name="@("H"+i)">@perf.Comments</textarea>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    i++;
+                }
+                @foreach (var perf in item.Performances.Where(x => x.Id == "008.F.10"))
+                {
+                    <div class="row question-item">
+                        <div class="col-md-12 col-sm-6">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="@perf.Id">8.@i - @perf.Name</label>
+
+                                <div class="col-md-4 col-sm-4">
+                                    <input class="form-control" type="text" name="@("H"+i)" id="" value="@perf.Comments" maxlength="120">
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    i++;
+                }
+            </div>
+        }
+
+        <div class="box-typical box-typical-padding">
+            <h6 style="margin-top: 0px;" class="m-t-lg with-border" id="q22">
+                9 - FINAL COMMENTS
+            </h6>
+            @foreach (var item in Model.FinalComments)
+                {
+                <div class="row">
+                    <div class="col-lg-12">
+                        @*<p>@item.Title</p>*@
+                        <fieldset class="form-group">
+                            <div class="col-xs-12 col-textarea-auto-avaliacao">
+                                <textarea rows="14" class="form-control" placeholder="" name="Z1">@item.Comments</textarea>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            }
+        </div>
+        @{
+            if (Model.Status != 1)
+            {
+                <div class="box-typical box-typical-padding" style="text-align: right; padding-bottom: 0px;">
+                    <div class="form-group">
+                        <button class="btn btn-sm btn-primary btn-rounded" name="action" value="Save" type="submit" id="btnObservationSave" data-toggle="tooltip" data-placement="top"
+                                title="Save">
+                            <span class="glyphicon glyphicon-floppy-disk"></span>
+                        </button>
+
+                        <button class="btn btn-sm btn-success btn-rounded" name="action" value="Finish" type="submit" id="btnObservationFinish" data-toggle="tooltip" data-placement="top"
+                                title="Submit">
+                            <span class="glyphicon glyphicon-ok-sign"></span>
+                        </button>
+                    </div>
+                </div>
+            }
+        }
+        
+    </div>
+}
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('.side-menu-list li').removeClass('active');
+            $('#sideMenuListItemObservations').addClass('active');
+
+            $('#btnObservationSave, #btnObservationFinish').on('click', function () {
+                swal({ title: "", text: "Loading", imageUrl: "/Content/img/loading.gif", showCancelButton: false, showConfirmButton: false });
+            });
+        });
+    </script>
+
+}

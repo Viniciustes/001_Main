@@ -1,0 +1,80 @@
+﻿@{ 
+    CTJEvaluation001.Domain.Entities.Auth.AuthUser authUser = HttpContext.Current.Session["user"] as CTJEvaluation001.Domain.Entities.Auth.AuthUser;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - CTJEvaluation</title>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/Content/img/favicons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/Content/img/favicons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/Content/img/favicons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/Content/img/favicons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/Content/img/favicons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/Content/img/favicons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/Content/img/favicons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/Content/img/favicons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/Content/img/favicons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/Content/img/favicons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/Content/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/Content/img/favicons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/Content/img/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/Content/img/favicons/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    @Styles.Render("~/Content/css/ladda/ladda.min.css")
+    @Styles.Render("~/Content/css/main.css")
+    @Styles.Render("~/Content/css/custom.css")
+    @Styles.Render("~/Content/css/font-awesome/font-awesome.min.css")
+    @Styles.Render("~/Content/css/sweetalert/sweetalert.css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link href="~/Content/ObservationPrint.css" rel="stylesheet" media="print" type="text/css" />    
+</head>
+<body>
+    
+
+    <div class="page-content">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    @RenderSection("scripts", required: false)
+
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+
+            setInterval(function() {
+                $.ajax(
+                {
+                    type: 'GET',
+                    url: '/Account/IsAuthenticated',
+                    complete: function (data) {
+                        if (data.responseText != 'True') {
+                            setTimeout(function () {
+                                window.location.href = "/Account/Login";
+                            }, 1900);
+                            swal({
+                                title: "Sua sessão expirou!",
+                                text: "Você será redirecionado para tela de login.",
+                                timer: 2000,
+                                showConfirmButton: false
+                            });
+                        }
+                    }
+                });
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

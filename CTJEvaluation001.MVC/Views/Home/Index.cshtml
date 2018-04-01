@@ -1,0 +1,66 @@
+﻿@model IEnumerable<CTJEvaluation001.MVC.ViewModels.ObservationViewModel>
+
+@{
+    ViewBag.Title = "Observations";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12">
+            <section class="box-typical">
+                <header class="box-typical-header">
+                    <div class="tbl-row">
+                        <div class="tbl-cell tbl-cell-title">
+                            <h3>Observations</h3>
+                        </div>
+                        <div class="tbl-cell tbl-cell-actions">
+
+                        </div>
+                    </div>
+                </header>
+                <div class="box-typical-body">
+                    <table class="tbl-typical">
+                        <tr style="line-height: 0.5;">
+                            <th class="text-center">
+                                <div></div>
+                            </th>
+                            <th>
+                                <div>Observation</div>
+                            </th>
+                            <th>
+                                <div>Observer</div>
+                            </th>
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="text-center">
+                                    <span class="label label-success">
+                                        <span class="glyphicon glyphicon-thumbs-up"></span>
+                                    </span>
+                                </td>
+                                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Observer.Name)</td>
+                                <td>
+                                    <a href="@Url.Action("Observation", new { id=item.Id })"
+                                       class="btn btn-sm btn-secondary btn-rounded">
+                                        <span class="glyphicon glyphicon-new-window"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div><!--.box-typical-body-->
+            </section><!--.box-typical-dashboard-->
+        </div><!--.col-->
+    </div>
+</div>
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('.side-menu-list li').removeClass('active');
+            $('#sideMenuListItemObservations').addClass('active');
+        });
+    </script>    
+}

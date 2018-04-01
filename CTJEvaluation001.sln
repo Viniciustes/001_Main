@@ -1,0 +1,108 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - Presentation", "0 - Presentation", "{2ADB0E5C-4309-4DAC-8A92-965536860467}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Services", "1 - Services", "{B09EA6D6-A979-4260-B387-94DD1E686228}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Application", "2 - Application", "{B0D8D22E-AFB8-4243-85A5-401887921B19}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Domain", "3 - Domain", "{C90B103E-FC8B-41C9-891E-71B91989D448}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Infra", "4 - Infra", "{4ABB2C3E-D8C8-4274-ABBC-A9717CA6196B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.1 - Data", "4.1 - Data", "{20AB1F5E-CCD3-40A5-BE33-32F4832C01E0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.2 - CrossCutting", "4.2 - CrossCutting", "{AB402F6D-6C74-45CC-A0C0-802A6FA78E82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CTJEvaluation001.MVC", "CTJEvaluation001.MVC\CTJEvaluation001.MVC.csproj", "{EE409B4D-AF38-4E96-ACC9-97C400A21EF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CTJEvaluation001.Domain", "CTJEvaluation001.Domain\CTJEvaluation001.Domain.csproj", "{60C0E0B3-543C-4EC5-A4B7-CB0120FE3CAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CTJEvaluation001.Infra.Data", "CTJEvaluation001.Infra.Data\CTJEvaluation001.Infra.Data.csproj", "{A945077C-D0DE-48D0-8640-8B2C656A1A5C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CTJEvaluation001.Application", "CTJEvaluation001.Application\CTJEvaluation001.Application.csproj", "{F794AC11-A576-475B-A5AB-DF556E792F1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CTJEvaluation001.Infra.CrossCutting", "CTJEvaluation001.Infra.CrossCutting\CTJEvaluation001.Infra.CrossCutting.csproj", "{67641632-4EEE-43DF-B3B6-E0DB746F4412}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5 - Reports", "5 - Reports", "{1DB44E9E-9977-450E-8885-4959FCF27D21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CTJEvaluation001.Reports", "CTJEvaluation001.Reports\CTJEvaluation001.Reports.csproj", "{A4DD3D7A-D739-4213-AAF3-B70476710814}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EE409B4D-AF38-4E96-ACC9-97C400A21EF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE409B4D-AF38-4E96-ACC9-97C400A21EF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE409B4D-AF38-4E96-ACC9-97C400A21EF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE409B4D-AF38-4E96-ACC9-97C400A21EF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60C0E0B3-543C-4EC5-A4B7-CB0120FE3CAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60C0E0B3-543C-4EC5-A4B7-CB0120FE3CAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60C0E0B3-543C-4EC5-A4B7-CB0120FE3CAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60C0E0B3-543C-4EC5-A4B7-CB0120FE3CAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A945077C-D0DE-48D0-8640-8B2C656A1A5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A945077C-D0DE-48D0-8640-8B2C656A1A5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A945077C-D0DE-48D0-8640-8B2C656A1A5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A945077C-D0DE-48D0-8640-8B2C656A1A5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F794AC11-A576-475B-A5AB-DF556E792F1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F794AC11-A576-475B-A5AB-DF556E792F1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F794AC11-A576-475B-A5AB-DF556E792F1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F794AC11-A576-475B-A5AB-DF556E792F1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67641632-4EEE-43DF-B3B6-E0DB746F4412}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67641632-4EEE-43DF-B3B6-E0DB746F4412}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67641632-4EEE-43DF-B3B6-E0DB746F4412}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67641632-4EEE-43DF-B3B6-E0DB746F4412}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4DD3D7A-D739-4213-AAF3-B70476710814}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4DD3D7A-D739-4213-AAF3-B70476710814}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4DD3D7A-D739-4213-AAF3-B70476710814}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4DD3D7A-D739-4213-AAF3-B70476710814}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{20AB1F5E-CCD3-40A5-BE33-32F4832C01E0} = {4ABB2C3E-D8C8-4274-ABBC-A9717CA6196B}
+		{AB402F6D-6C74-45CC-A0C0-802A6FA78E82} = {4ABB2C3E-D8C8-4274-ABBC-A9717CA6196B}
+		{EE409B4D-AF38-4E96-ACC9-97C400A21EF7} = {2ADB0E5C-4309-4DAC-8A92-965536860467}
+		{60C0E0B3-543C-4EC5-A4B7-CB0120FE3CAC} = {C90B103E-FC8B-41C9-891E-71B91989D448}
+		{A945077C-D0DE-48D0-8640-8B2C656A1A5C} = {20AB1F5E-CCD3-40A5-BE33-32F4832C01E0}
+		{F794AC11-A576-475B-A5AB-DF556E792F1B} = {B0D8D22E-AFB8-4243-85A5-401887921B19}
+		{67641632-4EEE-43DF-B3B6-E0DB746F4412} = {AB402F6D-6C74-45CC-A0C0-802A6FA78E82}
+		{A4DD3D7A-D739-4213-AAF3-B70476710814} = {1DB44E9E-9977-450E-8885-4959FCF27D21}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 7
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://mtztfs:8080/tfs/ctj%20-%20projects
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = CTJEvaluation001.MVC\\CTJEvaluation001.MVC.csproj
+		SccProjectTopLevelParentUniqueName1 = CTJEvaluation001.sln
+		SccProjectName1 = CTJEvaluation001.MVC
+		SccLocalPath1 = CTJEvaluation001.MVC
+		SccProjectUniqueName2 = CTJEvaluation001.Domain\\CTJEvaluation001.Domain.csproj
+		SccProjectTopLevelParentUniqueName2 = CTJEvaluation001.sln
+		SccProjectName2 = CTJEvaluation001.Domain
+		SccLocalPath2 = CTJEvaluation001.Domain
+		SccProjectUniqueName3 = CTJEvaluation001.Infra.Data\\CTJEvaluation001.Infra.Data.csproj
+		SccProjectTopLevelParentUniqueName3 = CTJEvaluation001.sln
+		SccProjectName3 = CTJEvaluation001.Infra.Data
+		SccLocalPath3 = CTJEvaluation001.Infra.Data
+		SccProjectUniqueName4 = CTJEvaluation001.Application\\CTJEvaluation001.Application.csproj
+		SccProjectTopLevelParentUniqueName4 = CTJEvaluation001.sln
+		SccProjectName4 = CTJEvaluation001.Application
+		SccLocalPath4 = CTJEvaluation001.Application
+		SccProjectUniqueName5 = CTJEvaluation001.Infra.CrossCutting\\CTJEvaluation001.Infra.CrossCutting.csproj
+		SccProjectTopLevelParentUniqueName5 = CTJEvaluation001.sln
+		SccProjectName5 = CTJEvaluation001.Infra.CrossCutting
+		SccLocalPath5 = CTJEvaluation001.Infra.CrossCutting
+		SccProjectUniqueName6 = CTJEvaluation001.Reports\\CTJEvaluation001.Reports.csproj
+		SccProjectTopLevelParentUniqueName6 = CTJEvaluation001.sln
+		SccProjectName6 = CTJEvaluation001.Reports
+		SccLocalPath6 = CTJEvaluation001.Reports
+	EndGlobalSection
+EndGlobal

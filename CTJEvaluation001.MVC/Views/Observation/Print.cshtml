@@ -1,0 +1,195 @@
+﻿@model CTJEvaluation001.MVC.ViewModels.ObservationViewModel
+
+@{
+    ViewBag.Title = "Observation";
+    Layout = "~/Views/Shared/_PrintLayout.cshtml";
+}
+
+<header class="page-content-header">
+    <div class="container-fluid">
+
+        <div class="tbl">
+            <div class="tbl-row">
+                <div class="tbl-cell">
+                    <h4>@Html.DisplayFor(model => model.Name)</h4>
+                </div>
+            </div>
+        </div>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["Error"]
+            </div>
+        }
+    </div>
+</header>
+<div class="container-fluid">
+    <div class="box-typical box-typical-padding">
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <strong>Status:&nbsp;</strong>
+                    </td>
+                    <td>
+                        @{
+                            if (Model.Status == 1)
+                            {
+                                <text>Done</text>
+                            }
+                            else if (Model.Status == 2)
+                            {
+                                <text>Not Started</text>
+                            }
+                            else
+                            {
+                                <text>In Progress</text>
+                            }
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Observer:&nbsp;</strong>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Observer.Name)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Observed:&nbsp;</strong>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Observed.Name)
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+    <h6 class="with-border"></h6>
+    <div class="box-typical box-typical-padding">
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="5">
+                        <h6 style="margin-top: 0px;" class="m-t-lg with-border" id="q4">
+                            0 - TEACHER OBSERVATION REPORT
+                        </h6>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <strong>Date:&nbsp;</strong>
+                    </td>
+                    <td>
+                        <strong>Time:&nbsp;</strong>
+                    </td>
+                    <td>
+                        <strong>Branch:&nbsp;</strong>
+                    </td>
+                    <td>
+                        <strong>Class:&nbsp;</strong>
+                    </td>
+                    <td>
+                        <strong>Number of SS:&nbsp;</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => model.TeacherObservationReport.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.TeacherObservationReport.Time)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.TeacherObservationReport.Branch)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.TeacherObservationReport.Class)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.TeacherObservationReport.NumberOfSS)
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+    @foreach (var item in Model.Competences)
+    {
+        <div class="box-typical box-typical-padding">
+            <h6 style="margin-top: 0px;" class="m-t-lg with-border" id="q4">
+                @item.Name
+            </h6>
+            @foreach (var perf in item.Performances)
+            {
+                <div class="row question-item">
+                    <div class="col-md-12 col-sm-6">
+                        <fieldset class="form-group">
+                            <label class="form-label" for="@perf.Id">@perf.Id - @perf.Name</label>
+
+                            @foreach (var escala in Model.Escalas)
+                            {
+                                    if (perf.Value == escala.Id)
+                                    {
+                                        <text>@escala.Name</text>
+                                    }
+                            }
+                        </fieldset>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    <div class="box-typical box-typical-padding">
+        <h6 style="margin-top: 0px;" class="m-t-lg with-border" id="q22">
+            Z - FINAL COMMENTS
+        </h6>
+        @foreach (var item in Model.FinalComments)
+        {
+            <div class="row">
+                <div class="col-lg-12">
+                    <strong>
+                        <p>@item.Title</p>
+                    </strong>
+                    <fieldset class="form-group">
+                        <div class="col-xs-12 col-textarea-auto-avaliacao">
+                            <p>@item.Comments</p>
+
+
+                            @*<textarea rows="14" class="form-control" placeholder="" name="@item.Cod">@item.Comments</textarea>*@
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        }
+    </div>
+    @{
+        if (Model.Status != 1)
+        {
+            <div class="box-typical box-typical-padding" style="text-align: right; padding-bottom: 0px;">
+                <div class="form-group">
+                    <button class="btn btn-sm btn-primary btn-rounded" name="action" value="Save" type="submit" id="btnObservationSave" data-toggle="tooltip" data-placement="top"
+                            title="Save">
+                        <span class="glyphicon glyphicon-floppy-disk"></span>
+                    </button>
+
+                    <button class="btn btn-sm btn-success btn-rounded" name="action" value="Finish" type="submit" id="btnObservationFinish" data-toggle="tooltip" data-placement="top"
+                            title="Submit">
+                        <span class="glyphicon glyphicon-ok-sign"></span>
+                    </button>
+                </div>
+            </div>
+        }
+    }
+
+</div>
+
+<script>
+    window.print();
+</script>

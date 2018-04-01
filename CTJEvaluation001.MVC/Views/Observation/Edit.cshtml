@@ -1,0 +1,212 @@
+﻿@model CTJEvaluation001.MVC.ViewModels.ObservationViewModel
+
+@{
+    ViewBag.Title = "Observation";
+}
+
+@using (Html.BeginForm("Save", "Observation"))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" value="@Model.CodAvaliacao" name="CodAvaliacao" />
+    <input type="hidden" value="@Model.ObserverId" name="ChapaAvaliador" />
+    <input type="hidden" value="@Model.ObservedId" name="ChapaAvaliado" />
+    <header class="page-content-header">
+        <div class="container-fluid">
+            
+            <div class="tbl">
+                <div class="tbl-row">
+                    <div class="tbl-cell">
+                        <a href="@Url.Action("Index", "Observation")" class="btn btn-primary btn-rounded">
+                            <span class="glyphicon glyphicon-arrow-left"></span>
+                        </a>
+                    </div>
+                    <div class="tbl-cell">
+                        <h4>@Html.DisplayFor(model => model.Name)</h4>
+                    </div>
+                    <div class="tbl-cell text-right">
+                        <a class="btn btn-sm btn-secondary btn-rounded" data-toggle="tooltip" data-placement="top"
+                                title="Print" href="/Observation/Print/@Model.Id" target="_blank">
+                            <span class="glyphicon glyphicon-print"></span>
+                        </a>
+                    </div>
+                </div>                
+            </div>
+            @if (TempData["Error"] != null)
+                {
+                <div class="alert alert-danger">
+                    @TempData["Error"]
+                </div>
+            }
+        </div>
+    </header>
+    <div class="container-fluid">
+        <div class="box-typical box-typical-padding">
+            <div class="row">
+                <div class="col-md-8 col-sm-6">
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <h6 style="margin-top: 0px; text-align: right;" class="m-t-lg">
+                        Status:
+                        @{
+                            if (Model.Status == 1)
+                            {
+                                <span class="label label-success">
+                                    <span class="glyphicon glyphicon-thumbs-up"></span>
+                                </span>
+                            }
+                            else if (Model.Status == 2)
+                            {
+                                <span class="label label-danger">
+                                    <span class="glyphicon glyphicon-thumbs-down"></span>
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="label label-warning">
+                                    <span class="glyphicon glyphicon-thumbs-up"></span>
+                                </span>
+                            }
+                        }
+                    </h6>
+                </div>
+            </div>
+            <h6 class="with-border"></h6>
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="avaliador_nome">Observer</label>
+                        <input type="text" class="form-control" id="avaliador_nome" placeholder="" disabled="" value="@Html.DisplayFor(model => model.Observer.Name)">
+                    </fieldset>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="avaliado_nome">Observed</label>
+                        <input type="text" class="form-control" id="avaliado_nome" placeholder="" disabled=""
+                               value="@Html.DisplayFor(model => model.Observed.Name)">
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <h6 class="with-border"></h6>
+        <div class="box-typical box-typical-padding">
+            <h6 style="margin-top: 0px;" class="m-t-lg with-border" id="q4">
+                0 - TEACHER OBSERVATION REPORT
+            </h6>
+            <div class="row">
+                <div class="col-md-2 col-sm-6">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="date">Date</label>
+                        <input type="text" class="form-control" id="date" name="Date" placeholder="__/__/____" value="@Html.DisplayFor(model => model.TeacherObservationReport.Date)" @if (Model.Status != 2 && Model.Status != 3) { <text>disabled="disabled"</text> }>
+                    </fieldset>
+                </div>
+                <div class="col-md-2 col-sm-6">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="time">Time</label>
+                        <input type="text" class="form-control" id="time" name="Time" placeholder="__:__" value="@Html.DisplayFor(model => model.TeacherObservationReport.Time)" @if (Model.Status != 2 && Model.Status != 3) { <text>disabled="disabled"</text> }>
+                    </fieldset>
+                </div>
+                <div class="col-md-2 col-sm-6">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="branch">Branch</label>
+                        <input type="text" class="form-control" id="branch" name="Branch" value="@Html.DisplayFor(model => model.TeacherObservationReport.Branch)" @if (Model.Status != 2 && Model.Status != 3) { <text>disabled="disabled"</text> }>
+                    </fieldset>
+                </div>
+                <div class="col-md-2 col-sm-6">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="class">Class</label>
+                        <input type="text" class="form-control" id="class" name="Class" value="@Html.DisplayFor(model => model.TeacherObservationReport.Class)" @if (Model.Status != 2 && Model.Status != 3) { <text>disabled="disabled"</text> }>
+                    </fieldset>
+                </div>
+                <div class="col-md-2 col-sm-6">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="ss">Number of SS</label>
+                        <input type="text" class="form-control" id="ss" name="SS" value="@Html.DisplayFor(model => model.TeacherObservationReport.NumberOfSS)" @if (Model.Status != 2 && Model.Status != 3) { <text>disabled="disabled"</text> }>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        @foreach (var item in Model.Competences)
+        {
+            <div class="box-typical box-typical-padding">
+                <h6 style="margin-top: 0px;" class="m-t-lg with-border" id="q4">
+                    @item.Name
+                </h6>
+                @foreach (var perf in item.Performances)
+                    {
+                    <div class="row question-item">
+                        <div class="col-md-12 col-sm-6">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="@perf.Id">@perf.Id - @perf.Name</label>
+
+                                @foreach (var escala in Model.Escalas)
+                                {
+                                    <div class="col-md-2 col-sm-6">
+                                        <div class="radio">
+                                            <input type="radio"
+                                                   name="@perf.Id.Replace(".", "")"
+                                                   id="@($"{escala.Name.Replace(" ", "")}-1-{perf.Id.Replace(" ", "")}")"
+                                                   value="@escala.Id"
+                                                   @if (perf.Value == escala.Id) { <text> checked="checked" </text> } @if (Model.Status != 2 && Model.Status != 3) { <text>disabled="disabled"</text> }>                                            
+                                            <label for="@($"{escala.Name.Replace(" ", "")}-1-{perf.Id.Replace(" ", "")}")">@escala.Name</label>
+                                        </div>
+                                    </div>
+                                }
+                            </fieldset>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+        <div class="box-typical box-typical-padding">
+            <h6 style="margin-top: 0px;" class="m-t-lg with-border" id="q22">
+                Z - FINAL COMMENTS
+            </h6>
+            @foreach (var item in Model.FinalComments)
+                {
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p>@item.Title</p>
+                        <fieldset class="form-group">
+                            <div class="col-xs-12 col-textarea-auto-avaliacao">
+                                <textarea rows="14" class="form-control" placeholder="" name="@item.Cod">@item.Comments</textarea>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            }
+        </div>
+        @{
+            if (Model.Status != 1)
+            {
+                <div class="box-typical box-typical-padding" style="text-align: right; padding-bottom: 0px;">
+                    <div class="form-group">
+                        <button class="btn btn-sm btn-primary btn-rounded" name="action" value="Save" type="submit" id="btnObservationSave" data-toggle="tooltip" data-placement="top"
+                                title="Save">
+                            <span class="glyphicon glyphicon-floppy-disk"></span>
+                        </button>
+
+                        <button class="btn btn-sm btn-success btn-rounded" name="action" value="Finish" type="submit" id="btnObservationFinish" data-toggle="tooltip" data-placement="top"
+                                title="Submit">
+                            <span class="glyphicon glyphicon-ok-sign"></span>
+                        </button>
+                    </div>
+                </div>
+            }
+        }
+        
+    </div>
+}
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('.side-menu-list li').removeClass('active');
+            $('#sideMenuListItemObservations').addClass('active');
+
+            $('#btnObservationSave, #btnObservationFinish').on('click', function () {
+                swal({ title: "", text: "Loading", imageUrl: "/Content/img/loading.gif", showCancelButton: false, showConfirmButton: false });
+            });
+        });
+    </script>
+
+}

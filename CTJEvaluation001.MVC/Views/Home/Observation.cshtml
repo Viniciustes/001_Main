@@ -1,0 +1,242 @@
+﻿@model CTJEvaluation001.MVC.ViewModels.ObservationViewModel
+
+@{
+    ViewBag.Title = "Observation";
+}
+
+<header class="page-content-header">
+    <div class="container-fluid">
+        <div class="tbl">
+            <div class="tbl-row">
+                <div class="tbl-cell">
+                    <h4>@Html.DisplayFor(model => model.Name)</h4>
+                </div>
+                <div class="tbl-cell text-right">
+                    @*<button class="btn btn-sm btn-secondary btn-rounded" data-toggle="tooltip" data-placement="top"
+                            title="Download">
+                        <span class="glyphicon glyphicon-download"></span>
+                    </button>*@
+                    <button class="btn btn-sm btn-secondary btn-rounded" data-toggle="tooltip" data-placement="top"
+                            title="Print" onclick="javascript: window.print();">
+                        <span class="glyphicon glyphicon-print"></span>
+                    </button>
+                    @*<button class="btn btn-sm btn-secondary btn-rounded" data-toggle="tooltip" data-placement="top"
+                            title="Send by email">
+                        <span class="glyphicon glyphicon-envelope"></span>
+                    </button>*@
+
+                    <!--
+                    <button class="btn btn-sm btn-primary btn-rounded" data-toggle="tooltip" data-placement="top"
+                            title="Save">
+                        <span class="glyphicon glyphicon-floppy-disk"></span>
+                    </button>
+                    <button class="btn btn-sm btn-primary btn-rounded" data-toggle="tooltip" data-placement="top"
+                            title="Finalize">
+                        <span class="glyphicon glyphicon-ok"></span>
+                    </button>
+                    -->
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container-fluid">
+    <div class="box-typical box-typical-padding">
+        <div class="row">
+            <div class="col-md-8 col-sm-6">
+                <!-- <h6 style="margin-top: 0px;" class="m-t-lg">
+                    Detalhes da avaliação: 2016-1 - Observações - 1º Semestre 2016-01
+                </h6> -->
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <h6 style="margin-top: 0px; text-align: right;" class="m-t-lg">
+                    Status:
+                    <span class="label label-pill label-success">
+                        <span class="glyphicon glyphicon-thumbs-up"></span>
+                    </span>
+                </h6>
+            </div>
+        </div>
+
+        <!-- <h6 class="with-border" style="padding-bottom:0px; margin-bottom:0px;"></h6> -->
+        <h6 class="with-border"></h6>
+
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-6">
+                <fieldset class="form-group">
+                    <label class="form-label" for="avaliador_nome">Observer</label>
+                    <input type="text" class="form-control" id="avaliador_nome" placeholder="" disabled=""
+                           value="@Html.DisplayFor(model => model.Observer.Name)">
+                </fieldset>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <fieldset class="form-group">
+                    <label class="form-label" for="avaliado_nome">Observed</label>
+                    <input type="text" class="form-control" id="avaliado_nome" placeholder="" disabled=""
+                           value="@Html.DisplayFor(model => model.Observed.Name)">
+                </fieldset>
+            </div>
+        </div><!--.row-->
+    </div><!--.box-typical-->
+
+    <h6 class="with-border"></h6>
+
+    <div class="box-typical box-typical-padding">
+
+        <h6 style="margin-top: 0px;" class="m-t-lg with-border" id="q4">
+            0 - TEACHER OBSERVATION REPORT
+        </h6>
+
+        <div class="row">
+            <div class="col-md-2 col-sm-6">
+                <fieldset class="form-group">
+                    <label class="form-label" for="date">Date</label>
+                    <input type="text" class="form-control" id="date" placeholder="__/__/____" value="@Html.DisplayFor(model => model.TeacherObservationReport.Date)" disabled="disabled">
+                    <!--<small class="text-muted">Format: 00/00/0000</small>-->
+                </fieldset>
+            </div>
+            <div class="col-md-2 col-sm-6">
+                <fieldset class="form-group">
+                    <label class="form-label" for="time">Time</label>
+                    <input type="text" class="form-control" id="time" placeholder="__:__" value="@Html.DisplayFor(model => model.TeacherObservationReport.Time)" disabled="disabled">
+                    <!--<small class="text-muted">Format: 00:00</small>-->
+                </fieldset>
+            </div>
+            <div class="col-md-2 col-sm-6">
+                <fieldset class="form-group">
+                    <label class="form-label" for="branch">Branch</label>
+                    <input type="text" class="form-control" id="branch" value="@Html.DisplayFor(model => model.TeacherObservationReport.Branch)" disabled="disabled">
+                </fieldset>
+            </div>
+            <div class="col-md-2 col-sm-6">
+                <fieldset class="form-group">
+                    <label class="form-label" for="class">Class</label>
+                    <input type="text" class="form-control" id="class" value="@Html.DisplayFor(model => model.TeacherObservationReport.Class)" disabled="disabled">
+                </fieldset>
+            </div>
+            <div class="col-md-2 col-sm-6">
+                <fieldset class="form-group">
+                    <label class="form-label" for="ss">Number of SS</label>
+                    <input type="text" class="form-control" id="ss" value="@Html.DisplayFor(model => model.TeacherObservationReport.NumberOfSS)" disabled="disabled">
+                </fieldset>
+            </div>
+        </div><!--.row-->
+    </div><!--.box-typical-->
+
+    @foreach (var item in Model.Competences)
+    {
+        <div class="box-typical box-typical-padding">
+
+            <h6 style="margin-top: 0px;" class="m-t-lg with-border" id="q4">
+                @item.Name
+            </h6>
+
+            @foreach (var perf in item.Performances)
+            {
+                <div class="row question-item">
+                    <div class="col-md-12 col-sm-6">
+                        <fieldset class="form-group">
+                            <label class="form-label" for="a1">@perf.Id - @perf.Name</label>
+
+                            <div class="col-md-2 col-sm-6">
+                                <div class="radio">
+                                    <input type="radio" name="@perf.Id" id="fully-1-@perf.Id" value="fa1" @if(perf.F == 1) { <text>checked="checked" </text> }>
+                                    <label for="fully-1">Fully</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-sm-6">
+                                <div class="radio">
+                                    <input type="radio" name="@perf.Id" id="most-of-the-time-1-@perf.Id" value="ma1" @if(perf.M == 1) { <text>checked="checked" </text> }>
+                                    <label for="most-of-the-time-1">Most of the time</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-sm-6">
+                                <div class="radio">
+                                    <input type="radio" name="@perf.Id" id="partially-1-@perf.Id" value="pa1" @if(perf.P == 1) { <text>checked="checked" </text> }>
+                                    <label for="partially-1">Partially</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-sm-6">
+                                <div class="radio">
+                                    <input type="radio" name="@perf.Id" id="no-1-@perf.Id" value="na1" @if(perf.NO == 1) { <text>checked="checked" </text> }>
+                                    <label for="no-1">No</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-sm-6">
+                                <div class="radio">
+                                    <input type="radio" name="@perf.Id" id="na-1-@perf.Id" value="naa1" @if(perf.NA == 1) { <text>checked="checked" </text> }>
+                                    <label for="na-1">NA</label>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </div>
+                </div><!--.row-->
+            }
+            
+        </div><!--.box-typical-->
+    }
+
+    <div class="box-typical box-typical-padding">
+
+        <h6 style="margin-top: 0px;" class="m-t-lg with-border" id="q22">
+            Z - FINAL COMMENTS
+        </h6>
+
+        @foreach (var item in Model.FinalComments)
+        {
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>@item.Title</p>
+                    <fieldset class="form-group">
+                        <div class="col-xs-12 col-textarea-auto-avaliacao">
+                            <textarea rows="14" class="form-control" placeholder="" disabled="disabled">@item.Comments</textarea>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        }
+    </div><!--.box-typical-->
+
+    <div class="box-typical box-typical-padding" style="text-align: right; padding-bottom: 0px;">
+        <div class="form-group">
+            
+            @*<button class="btn btn-sm btn-secondary btn-rounded" data-toggle="tooltip" data-placement="top"
+                    title="Download">
+                <span class="glyphicon glyphicon-download"></span>
+            </button>*@
+            <button class="btn btn-sm btn-secondary btn-rounded" data-toggle="tooltip" data-placement="top" title="Print" onclick="javascript: window.print();">
+                <span class="glyphicon glyphicon-print"></span>
+            </button>
+            @*<button class="btn btn-sm btn-secondary btn-rounded" data-toggle="tooltip" data-placement="top"
+                    title="Send by email">
+                <span class="glyphicon glyphicon-envelope"></span>
+            </button>*@
+            
+            <!--
+            <button class="btn btn-sm btn-primary btn-rounded" data-toggle="tooltip" data-placement="top"
+                    title="Save">
+                <span class="glyphicon glyphicon-floppy-disk"></span>
+            </button>
+            <button class="btn btn-sm btn-primary btn-rounded" data-toggle="tooltip" data-placement="top"
+                    title="Finalize">
+                <span class="glyphicon glyphicon-ok"></span>
+            </button>
+            -->
+        </div>
+    </div>
+
+</div><!--.container-fluid-->
+
+@section scripts {
+    
+    <script>
+        $(document).ready(function () {
+            $('.side-menu-list li').removeClass('active');
+            $('#sideMenuListItemObservations').addClass('active');
+        });
+    </script>
+        
+}

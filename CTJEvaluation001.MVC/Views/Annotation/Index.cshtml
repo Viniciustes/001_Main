@@ -1,0 +1,148 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Evaluation Notes";
+}
+
+<div class="container-fluid">
+    <section class="box-typical">
+        <header class="box-typical-header">
+            <div class="tbl-row">
+                <div class="tbl-cell tbl-cell-title">
+                    <h3>Evaluation notes</h3>
+                </div>
+                <div class="tbl-cell tbl-cell-actions">
+
+                </div>
+            </div>
+        </header>
+
+        <div class="box-typical-body">
+            <div class="col-md-12">
+                <fieldset class="form-group row" style="padding-top: 17px;">
+                    <div class="col-md-8">
+                        <div class="form-control-wrapper form-control-icon-right">
+                            <input type="text" class="form-control uppercase" id="inputSearch" placeholder="Put a name (min: 3 letters)" />
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </div>
+
+                    </div>
+                </fieldset>
+            </div>
+        </div><!--.box-typical-body-->
+
+        <div class="row">
+            <div class="col-md-2 col-md-offset-5">
+                <img id="imgloading" src="~/Content/img/loading.gif" class="hidden" alt="Carregando..." width="32px" />
+            </div>
+        </div>
+
+        <div id="resultset" class="box-typical" style="margin-bottom:0;"></div>
+    </section><!--.box-typical-->
+
+
+    <div class="modal fade modalAnnotation"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="myLargeModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+                        <i class="font-icon-close-2"></i>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">New</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="formCrudAnnotation">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <fieldset class="form-group">
+                                    <select class="form-control select" id="inputAnnotationDescription" name="inputAnnotationDescription" required></select>
+                                </fieldset>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label class="form-label semibold" for="inputAnnotationDate">Date</label>
+                                    <input type="text" class="form-control date-mask-input" id="inputAnnotationDate" name="inputAnnotationDate" placeholder="__/__/____" required date="true">
+                                    <span>MM/DD/YYYY</span>
+                                </fieldset>
+                            </div>
+                            <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label class="form-label semibold" for="inputAnnotationResolutionDate">Resolution Date</label>
+                                    <input type="text" class="form-control date-mask-input" id="inputAnnotationResolutionDate" name="inputAnnotationResolutionDate" placeholder="__/__/____" date="true">
+                                    <span>MM/DD/YYYY</span>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <fieldset class="form-group">
+                                    <label class="form-label semibold">Text</label>
+                                    <textarea rows="8" class="form-control" id="inputAnnotationContent" name="inputAnnotationContent" required></textarea>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </form>
+
+                    <input type="hidden" id="inputAnnotationNro" value="0">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-rounded btn-default" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-primary btn-rounded ladda-button"  data-style="zoom-in" id="btnSaveAnnotation">
+                        <span class="ladda-label">
+                            <span class="glyphicon glyphicon-floppy-disk"></span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="box-typical hidden" id="annnotationsSection">
+        <header class="box-typical-header">
+            <div class="tbl-row">
+                <div class="tbl-cell tbl-cell-title">
+                    <h3 class="label-total-annotation"></h3>
+                </div>
+                <div class="tbl-cell tbl-cell-action-bordered" style="width: 120px;">
+                    <button type="button" class="action-btn" id="btnAddAnnotation">
+                        <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;Add
+                    </button>
+                </div>
+            </div>
+        </header>
+        <div class="">
+            <div class="table-responsive">
+                <table class="table table-hover" id="tableAnnotations">
+                    <thead>
+                        <tr>
+                            <th> </th>
+                            <th>Notes</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th style="min-width:135px;">Last modified by</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div><!--.box-typical-body-->
+    </section><!--.box-typical-->
+</div>
+@section scripts {
+
+<script>
+    $(document).ready(function () {
+        $('.side-menu-list li').removeClass('active');
+        $('#sideMenuListItemAnnotation').addClass('active');
+    });
+</script>
+}

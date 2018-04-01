@@ -1,0 +1,18 @@
+﻿<div class="row">
+    <div class="col-lg-12">
+        <fieldset class="form-group">
+            <!-- <div class="col-xs-12 col-textarea-auto-avaliacao"> -->
+
+            <div class="radio radio-item checkbox-bird-item-inline">
+                <input type="radio" name="inputCertOfProf" @if (ViewBag.Mostar == false) { <text>disabled="disabled" </text> } id="inputCertOfProf01" @if (Model.CertificateOfProficiency == 1) { <text> checked="checked" </text>  } value="1" />
+                <label for="inputCertOfProf01">Yes</label>
+            </div>
+            <br class="hidden-lg-up">
+            <div class="radio radio-item checkbox-bird-item">
+                <input type="radio" name="inputCertOfProf" @if (ViewBag.Mostar == false) { <text>disabled="disabled" </text> } id="inputCertOfProf02" @if (Model.CertificateOfProficiency == 0) { <text> checked="checked" </text>  } value="0" />
+                <label for="inputCertOfProf02">No</label>
+            </div>
+            <!-- </div> -->
+        </fieldset>
+    </div>
+</div><!--.row-->

@@ -1,0 +1,588 @@
+﻿@model CTJEvaluation001.MVC.ViewModels.SelfEvaluationViewModel
+
+@{
+    ViewBag.Title = "SelfEvaluation";
+    Layout = "~/Views/Shared/_PrintLayout.cshtml";
+
+    var baseUrlPartials = "~/Views/SelfEvaluation";
+    IEnumerable<CTJEvaluation001.Domain.Entities.ProfessionalDevelopment> p1 = Model.ProfessionalDevelopments.Where(x => x.Tipo == 1).ToList();
+    IEnumerable<CTJEvaluation001.Domain.Entities.ProfessionalDevelopment> p2 = Model.ProfessionalDevelopments.Where(x => x.Tipo == 2).ToList();
+
+    IEnumerable<CTJEvaluation001.Domain.Entities.ProjectActivity> projectActivity1 = Model.ProjectActivities.Where(x => x.CtjEvalId.Substring(0, 3) == "001").ToList();
+    IEnumerable<CTJEvaluation001.Domain.Entities.ProjectActivity> projectActivity2 = Model.ProjectActivities.Where(x => x.CtjEvalId.Substring(0, 3) == "002").ToList();
+
+    CTJEvaluation001.Domain.Entities.Auth.AuthUser authUser = HttpContext.Current.Session["user"] as CTJEvaluation001.Domain.Entities.Auth.AuthUser;
+}
+
+<div class="container-fluid">
+    <div class="box-typical box-typical-padding">
+
+        <table class="table">
+            <tr>
+                <td>
+                    <strong>NAME: </strong>
+                </td>
+                <td>
+                    @Model.Name
+                </td>
+                <td>
+                    <strong>YEAR: </strong>
+                </td>
+                <td>
+                    @Model.Ano
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="box-typical box-typical-padding">
+
+        <h6 style="margin-top: 0px;" class="m-t-lg with-border">
+            <strong>01. CTJ Events you participated.</strong>
+        </h6>
+
+        <div class="row">
+            <div class="col-lg-12">
+                @foreach (var item in Model.Question1.Courses)
+                {
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th colspan="2">
+                                    @item.Name
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var c in item.Classes)
+                            {
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                    </td>
+                                    <td width="100%">
+                                        @c.Name
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="box-typical box-typical-padding">
+
+        <h6 style="margin-top: 0px;" class="m-t-lg with-border" id="q4">
+            <strong>02. Meetings with Supervisors.</strong>
+        </h6>
+
+        <div class="row">
+            <div class="col-lg-12">
+                @foreach (var item in Model.Question2.Courses)
+                {
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th colspan="2">
+                                    @item.Name
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var c in item.Classes)
+                            {
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                    </td>
+                                    <td width="100%">
+                                        @c.Name
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="box-typical box-typical-padding">
+
+        <h6 style="margin-top: 0px;" class="m-t-lg with-border" id="q4">
+            <strong>03. Optional Training.</strong>
+        </h6>
+
+        <div class="row">
+            <div class="col-lg-12">
+                @foreach (var item in Model.Question2A.Courses)
+                {
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th colspan="2">
+                                    @item.Name
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var c in item.Classes)
+                            {
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                    </td>
+                                    <td width="100%">
+                                        @c.Name
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="box-typical box-typical-padding">
+
+        <h6 style="margin-top: 0px;" class="m-t-lg with-border" id="q6">
+            <strong>04. Degree.</strong>
+        </h6>
+        @switch (Model.Degree)
+        {
+            case 1:
+                <text>Completed</text>
+                break;
+            case 2:
+                <text>Under way.</text>
+                break;
+            case 3:
+                <text>No degree, but I have TDC/CTJ TEFL certificate.</text>
+                break;
+            case 4:
+                <text>No degree.</text>
+                break;
+        }
+
+    </div>
+
+    <div class="box-typical box-typical-padding">
+
+        <h6 style="margin-top: 0px;" class="m-t-lg with-border" id="q7">
+            <strong>05. Certificate of Proficiency.</strong>
+        </h6>
+        @switch (Model.CertificateOfProficiency)
+        {
+            case 1:
+                <text>Yes</text>
+                break;
+            case 0:
+                <text>No</text>
+                break;
+        }
+    </div>
+
+    <div class="box-typical box-typical-padding">
+
+        <h6 style="margin-top: 0px;" class="m-t-lg with-border">
+            <strong>06. Engagement in other professional development opportunities.</strong>
+        </h6>
+        <section class="box-typical">
+            <div class="row">
+                <div class="col-lg-12">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody-professional-development-01">
+
+                            @if (Model.ProfessionalDevelopments.Where(x => x.Tipo == 1).ToList().Count == 0)
+                            {
+                                <tr>
+                                    <td colspan="2">
+                                        <div class="alert alert-warning">
+                                            There are no records.
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var item in Model.ProfessionalDevelopments.Where(x => x.Tipo == 1).ToList())
+                                {
+                                    <tr class="row-table-professional-development-01" data-selfeval-ano="@item.Ano" data-selfeval-tipo="@item.Tipo" data-selfeval-nseq="@item.Nseq" data-selfeval-image="@item.Imagem.AppBasepath@item.Imagem.Basepath@item.Imagem.Filename">
+                                        <td class="table-date content-date">
+                                            @item.Data.Date.ToString("dd/MM/yyyy")
+                                        </td>
+                                        <td class="color-blue-grey-lighter content-description">@item.Description</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <section class="box-typical">
+            <header class="box-typical-header">
+                <div class="tbl-row">
+                    <div class="tbl-cell tbl-cell-title">
+                        <h6 style="font-weight:normal; padding-right:8px;">Please specify other types of engagement in professional development opportunities, such as writing articles for journals, conducting academic projects, mentoring a peer, etc.</h6>
+                    </div>
+                </div>
+            </header>
+            <div class="box-typical-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Project</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (projectActivity1.Where(x => x.isChecked == 1).ToList().Count == 0)
+                            {
+                                <tr>
+                                    <td colspan="1">
+                                        <div class="alert alert-warning">
+                                            There are no records.
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var item in projectActivity1.ToList())
+                                {
+                                    <tr class="row-table-professional-development-other-types" data-selfeval-ano="@item.Ano" data-selfeval-ctjevalid="@item.CtjEvalId" data-selfeval-ctjevalnome="@item.CtjEvalName" data-selfeval-ctjevaldetails="@item.Details">
+                                        @if (item.isChecked == 1)
+                                        {
+                                            <td class="color-blue-grey-lighter content-name">@item.CtjEvalName</td>
+                                        }
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <section class="box-typical">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody class="tbody-professional-development-02">
+                        @if (p2.ToList().Count == 0)
+                        {
+                            <tr>
+                                <td colspan="3">
+                                    <div class="alert alert-warning">
+                                        There are no records.
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var item in p2.ToList())
+                            {
+                                <tr class="row-table-professional-development-02" data-selfeval-ano="@item.Ano" data-selfeval-tipo="@item.Tipo" data-selfeval-nseq="@item.Nseq">
+                                    <td class="table-date content-date">
+                                        @item.Data.Date.ToString("dd/MM/yyyy")
+                                    </td>
+                                    <td class="color-blue-grey-lighter content-description">@item.Description</td>
+                                    <td class="color-blue-grey-lighter content-details">@item.Details</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <div class="box-typical box-typical-padding">
+        <h6 style="margin-top: 0px;" class="m-t-lg with-border">
+            <strong>07. Digital Literacy.</strong>
+        </h6>
+        <section class="box-typical">
+            <div class="row">
+                <div class="col-lg-12">
+                    <table class="table table-bordered table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Evidence</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody-professional-development-01">
+                            @if (Model.DigitalLiteracies.ToList().Count == 0)
+                            {
+                                <tr>
+                                    <td colspan="2">
+                                        <div class="alert alert-warning">
+                                            There are no records.
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var item in Model.DigitalLiteracies)
+                                {
+                                    <tr class="row-table-professional-development-01" data-selfeval-ano="@item.Ano" data-selfeval-nseq="@item.Nseq">
+                                        <td class="table-date content-date">@item.Data.Date.ToString("dd/MM/yyyy")</td>
+                                        <td class="color-blue-grey-lighter content-description">@item.Description</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <h6 class="m-t-lg">
+            <strong>
+                Digital Projects with Students - Describe the digital projects you conducted with your groups. Add the link whenever possible.
+            </strong>
+        </h6>
+        <div class="row">
+            <div class="col-lg-12">
+                <fieldset class="form-group">
+                    <div class="col-xs-12 col-textarea-auto-avaliacao">
+                        @if (String.IsNullOrEmpty(@Model.DigitalProject))
+                        {
+                            <div class="alert alert-warning">
+                                There are no records.
+                            </div>
+                        }
+                        else
+                        {
+                            <p>
+                                @Model.DigitalProject
+                            </p>
+                        }
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-typical box-typical-padding">
+        <h6 style="margin-top: 0px;" class="m-t-lg with-border">
+            <strong>08. Professional Attitude & Commitment</strong>
+        </h6>
+        <div class="row">
+            <div class="col-lg-12">
+                <section class="box-typical">
+                    <div class="box-typical-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Activity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (projectActivity2.Where(x => x.isChecked == 1).ToList().Count == 0)
+                                    {
+                                        <tr>
+                                            <td colspan="1">
+                                                <div class="alert alert-warning">
+                                                    There are no records.
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        foreach (var item in projectActivity2.ToList())
+                                        {
+                                            <tr class="row-table-professional-attitude" data-selfeval-ano="@item.Ano" data-selfeval-ctjevalid="@item.CtjEvalId" data-selfeval-ctjevalnome="@item.CtjEvalName" data-selfeval-ctjevaldetails="@item.Details">
+                                                @if (item.isChecked == 1)
+                                                {
+                                                    <td class="color-blue-grey-lighter content-name">@item.CtjEvalName</td>
+                                                }
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-typical box-typical-padding">
+
+        <h6 style="margin-top: 0px;" class="m-t-lg with-border">
+            <strong>09. Now that you have completed the information above, it's time to reflect upon your academic year and all you have achieved. The self-evaluation instrument is a powerful tool because it allows you the opportunity to highlight projects and accomplishments that might otherwise go unnoticed. Thus, please take your time to respond and be as thorough as possible.</strong>
+        </h6>
+        <h6 class="m-t-lg">
+            <strong>
+                1. What were the most significant work-related accomplishments or successful efforts over the last period? (projects, assignments, new skills or knowledge gained) Which standard(s) would you relate them to? Why?
+            </strong>
+        </h6>
+        <div class="row">
+            <div class="col-lg-12">
+                <fieldset class="form-group">
+                    <div class="col-xs-12 col-textarea-auto-avaliacao">
+                        <p>
+                            @Model.FinalReflectionA
+                        </p>
+                    </div>
+                </fieldset>
+            </div>
+        </div><!--.row-->
+
+        <h6 class="m-t-lg">
+            <strong>
+                2. What factors impacted your job or your ability to perform your job? What could you do to perform your job duties more effectively? What could the institution have done to facilitate your job?
+            </strong>
+        </h6>
+        <div class="row">
+            <div class="col-lg-12">
+                <fieldset class="form-group">
+                    <div class="col-xs-12 col-textarea-auto-avaliacao">
+                        <p>
+                            @Model.FinalReflectionB
+                        </p>
+                    </div>
+                </fieldset>
+            </div>
+        </div><!--.row-->
+
+        <h6 class="m-t-lg">
+            <strong>
+                3. Analyze the descriptors for the Standards for CTJ Teachers and the criteria for evaluating each standard.
+            </strong>
+        </h6>
+
+        <h6 class="m-t-lg">
+            <strong>
+                a. Which standard(s) do you think you have reached to your greater satisfaction? Justify your answer with evidence.
+            </strong>
+        </h6>
+        <div class="row">
+            <div class="col-lg-12">
+                <fieldset class="form-group">
+                    <div class="col-xs-12 col-textarea-auto-avaliacao">
+                        <p>
+                            @Model.FinalReflectionC
+                        </p>
+                    </div>
+                </fieldset>
+            </div>
+        </div><!--.row-->
+        <h6 class="m-t-lg">
+            <strong>
+                b. Which standard, if any, do you think you still need to work on in order to achieve it fully? What strategies can you use in the future to improve your performance regarding this specific standard?
+            </strong>
+        </h6>
+        <div class="row">
+            <div class="col-lg-12">
+                <fieldset class="form-group">
+                    <div class="col-xs-12 col-textarea-auto-avaliacao">
+                        <p>
+                            @Model.FinalReflectionD
+                        </p>
+                    </div>
+                </fieldset>
+            </div>
+        </div><!--.row-->
+        <h6 class="m-t-lg">
+            <strong>
+                c. In which standard do you think you have exceeded? Justify your answer with evidence.
+            </strong>
+        </h6>
+        <div class="row">
+            <div class="col-lg-12">
+                <fieldset class="form-group">
+                    <div class="col-xs-12 col-textarea-auto-avaliacao">
+                        <p>
+                            @Model.FinalReflectionE
+                        </p>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+        <h6 class="m-t-lg">
+            <strong>
+                4. Complete the statement.
+            </strong>
+        </h6>
+
+        <h6 class="m-t-lg">
+            <strong>
+                a. My objectives for the coming year are:
+            </strong>
+        </h6>
+        <div class="row">
+            <div class="col-lg-12">
+                <fieldset class="form-group">
+                    <div class="col-xs-12 col-textarea-auto-avaliacao">
+                        <p>
+                            @Model.FinalReflectionF
+                        </p>
+                    </div>
+                </fieldset>
+            </div>
+        </div><!--.row-->
+
+        <h6 class="m-t-lg">
+            <strong>
+                b. Please use this space to add any other information you find important about your performance in the year of 2016, or may have identified in this document.
+            </strong>
+        </h6>
+        <div class="row">
+            <div class="col-lg-12">
+                <fieldset class="form-group">
+                    <div class="col-xs-12 col-textarea-auto-avaliacao">
+                        <p>
+                            @Model.FinalReflectionG
+                        </p>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+
+    @*<div class="box-typical box-typical-padding" style="text-align: right; padding-bottom: 0px;">
+            <div class="form-group">
+                <button class="btn btn-sm btn-secondary btn-rounded" data-toggle="tooltip" data-placement="top"
+                        title="Print" onclick="javascript: window.print();">
+                    <span class="glyphicon glyphicon-print"></span>
+                </button>
+            </div>
+        </div>*@
+</div>
+
+@section scripts {
+
+    <script>
+        $(document).ready(function () {
+            $('.side-menu-list li').removeClass('active');
+            $('#sideMenuListItemSelfEvaluation').addClass('active');
+        });
+    </script>
+}
+
+<script>
+    window.print();
+</script>

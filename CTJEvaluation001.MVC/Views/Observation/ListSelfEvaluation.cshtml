@@ -1,0 +1,130 @@
+﻿@model IEnumerable<CTJEvaluation001.MVC.ViewModels.SelfEvaluationViewModel>
+
+@{
+    ViewBag.Title = "ListSelfEvaluation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12">
+            @*<section class="box-typical box-typical-dashboard">*@
+                <header class="box-typical-header">
+                    <div class="tbl-row">
+                        <div class="tbl-cell tbl-cell-title">
+                            <h3>Self Evaluations</h3>
+                        </div>
+                        <div class="tbl-cell tbl-cell-actions">
+
+                        </div>
+                    </div>
+                </header>
+                <div class="box-typical box-typical-padding">
+                    @if (Model.Count() > 0)
+                    {
+                        <table class="table table-hover" id="listSelfEvaluationTable">
+                            <thead>
+                                <tr style="line-height: 0.5;">
+                                    <th class="disable-sorting">
+                                    </th>
+                                    <th>Name</th>
+                                    <th class="disable-sorting"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="text-center">
+                                            <span class="label label-success">
+                                                <span class="glyphicon glyphicon-thumbs-up"></span>
+                                            </span>
+                                        </td>
+                                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                        <td>
+                                            <a href="@Url.Action("EditSelfEvaluation", new { id=item.Chapa })"
+                                               class="btn btn-sm btn-secondary btn-rounded">
+                                                <span class="glyphicon glyphicon-new-window"></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <div>
+                            Nenhum registro encontrado para o Ano selecionado!
+                        </div>
+                    }
+                </div>
+            @*</section>*@
+        </div>
+    </div>
+    <div class="modal fade filtroAvancado"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="myLargeModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+                        <i class="font-icon-close-2"></i>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Filtros</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <fieldset class="form-group">
+                                <label class="form-label semibold" for="exampleInput">Parametro</label>
+                                <input type="text" class="form-control" id="exampleInput"
+                                       placeholder="Digite um parametro...">
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <label class="form-label semibold" for="exampleInput">Parametro</label>
+                                <select class="select2">
+                                    <option>Opção 1</option>
+                                    <option>Opção 2</option>
+                                    <option>Opção 3</option>
+                                    <option>Texto extra extra extra extra longo.</option>
+                                </select>
+                            </fieldset>
+                        </div>
+                        <div class="col-md-6">
+                            <fieldset class="form-group">
+                                <label class="form-label semibold" for="exampleInput">Parametro</label>
+                                <input type="text" class="form-control" id="exampleInput"
+                                       placeholder="Digite um parametro...">
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <label class="form-label semibold" for="exampleInput">Parametro</label>
+                                <select class="select2">
+                                    <option>Opção 1</option>
+                                    <option>Opção 2</option>
+                                    <option>Opção 3</option>
+                                    <option>Texto extra extra extra extra longo.</option>
+                                </select>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-rounded btn-primary">Pesquisar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('.side-menu-list li').removeClass('active');
+            $('#sideMenuListItemSelfEvaluation').addClass('active');
+        });
+    </script>
+}

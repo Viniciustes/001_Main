@@ -1,0 +1,87 @@
+﻿<section class="box-typical">
+    <header class="box-typical-header">
+        <div class="tbl-row">
+            <div class="tbl-cell tbl-cell-title">
+                <h6 style="font-weight:normal; padding-right:8px;">Please specify other types of engagement in professional development opportunities, such as writing articles for journals, conducting academic projects, mentoring a peer, etc.</h6>
+            </div>
+        </div>
+
+        <div class="modal fade crud7-modal"
+             tabindex="-1"
+             role="dialog"
+             aria-labelledby="crud7-modal"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+                            <i class="font-icon-close-2"></i>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Edit</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="formCrud7">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <fieldset class="form-group">
+                                        <label class="form-label semibold" for="exampleInput">Activity</label>
+                                        <input type="text" class="form-control" id="inputCrud7Activity" name="inputCrud7Activity" disabled="disabled" required>
+                                    </fieldset>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <fieldset class="form-group">
+                                        <label class="form-label semibold">Details</label>
+                                        <textarea rows="4" class="form-control" placeholder="" id="inputCrud7Details" name="inputCrud7Details" required></textarea>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal" data-toggle="tooltip" data-title="Cancel" data-placement="top" disabled="disabled">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                        <button type="button" id="btnCrud7Save" class="btn btn-rounded btn-primary ladda-button" data-toggle="tooltip" data-title="Save" data-placement="top" data-style="zoom-in" disabled="disabled">
+                            <span class="ladda-label"><span class="glyphicon glyphicon-ok"></span></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="box-typical-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th class="table-check"></th>
+                        <th>Activity</th>
+                        @*<th>Details</th>*@
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="row-table-professional-attitude" data-selfeval-ano="@item.Ano" data-selfeval-ctjevalid="@item.CtjEvalId" data-selfeval-ctjevalnome="@item.CtjEvalName" data-selfeval-ctjevaldetails="@item.Details">
+                            <td class="table-check">
+                                <div class="checkbox checkbox-only">
+                                    <input type="checkbox" id="@item.CtjEvalId" @if (ViewBag.Mostar == false) { <text>disabled="disabled" </text> } @if (item.isChecked == 1) { <text> checked="checked" </text>   } disabled="disabled" />
+                                    <label for="@item.CtjEvalId"></label>
+                                </div>
+                            </td>
+                            <td class="color-blue-grey-lighter content-name">@item.CtjEvalName</td>
+                            @*<td class="color-blue-grey-lighter content-details">@item.Details</td>*@
+                            <td class="table-icon-cell text-right">
+                                <button class="label-edit btn btn-sm btn-warning btn-rounded" @if (item.isChecked != 1) { <text> disabled="disabled" </text> }><i class="fa fa-pencil-square-o"></i></button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div><!--.box-typical-body-->
+</section><!--.box-typical-->

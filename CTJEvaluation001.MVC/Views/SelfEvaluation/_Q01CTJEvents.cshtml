@@ -1,0 +1,39 @@
+﻿<div class="row">
+    <div class="col-lg-12">
+        <fieldset class="form-group">
+            @foreach (var item in Model.Question1.Courses)
+            {
+                <div class="checkbox-bird checkbox-bird-item green">
+                    <input type="checkbox" id="ctj_inservice_minicourse" disabled="disabled" />
+                    <label for="ctj_inservice_minicourse">@item.Name</label>
+
+                    <div class="row" style="margin-top: 15px;">
+                        <div class="col-md-11 col-md-offset-1 collapse in" id="collapse_ctj_inservice_minicourse_@item.Id" aria-expanded="true">
+
+                            @foreach (var c in item.Classes)
+                            {
+                                <div class="checkbox-bird checkbox-bird-item-sm green">
+                                    <input type="checkbox" id="ctj_inservice_minicourse_@c.Id" disabled="disabled" />
+                                    <label for="ctj_inservice_minicourse_@c.Id">
+                                        @c.Name
+                                    </label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </fieldset>
+    </div>
+</div><!--.row-->
+
+<div class="row">
+    <div class="col-lg-12">
+        <fieldset class="form-group">
+            <div class="checkbox-bird checkbox-bird-item green checkbox-bird-red">
+                <input type="checkbox" id="inputCtjEvents01Confirm" value="1" @if (ViewBag.Mostar == false) { <text>disabled="disabled" </text> } @if (Model.CtjEvents01Confirm == 1) { <text> checked="checked" </text> } />
+                <label for="inputCtjEvents01Confirm">Check the button to confirm it</label>
+            </div>
+        </fieldset>
+    </div>
+</div><!--.row-->

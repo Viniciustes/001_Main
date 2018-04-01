@@ -1,0 +1,292 @@
+﻿@model CTJEvaluation001.MVC.ViewModels.SelfEvaluationViewModel
+
+@{
+    ViewBag.Title = "SelfEvaluation";
+    var baseUrlPartials = "~/Views/SelfEvaluation";
+    IEnumerable<CTJEvaluation001.Domain.Entities.ProfessionalDevelopment> p1 = Model.ProfessionalDevelopments.Where(x => x.Tipo == 1).ToList();
+    IEnumerable<CTJEvaluation001.Domain.Entities.ProfessionalDevelopment> p2 = Model.ProfessionalDevelopments.Where(x => x.Tipo == 2).ToList();
+
+    IEnumerable<CTJEvaluation001.Domain.Entities.ProjectActivity> projectActivity1 = Model.ProjectActivities.Where(x => x.CtjEvalId.Substring(0, 3) == "001").ToList();
+    IEnumerable<CTJEvaluation001.Domain.Entities.ProjectActivity> projectActivity2 = Model.ProjectActivities.Where(x => x.CtjEvalId.Substring(0, 3) == "002").ToList();
+
+    CTJEvaluation001.Domain.Entities.Auth.AuthUser authUser = HttpContext.Current.Session["user"] as CTJEvaluation001.Domain.Entities.Auth.AuthUser;
+}
+
+<div class="container-fluid">
+    @if (ViewBag.Viewer != "OBSERVER")
+    {
+        <header class="section-header" id="header">
+            <div class="tbl">
+                <div class="tbl-row">
+                    <div class="tbl-cell">
+                        <div class="alert alert-info">
+                            @if (authUser.ContextoAno == 2017)
+                            {
+                                <span class="font-icon glyphicon glyphicon-info-sign"></span> <text>The @authUser.ContextoAno self-evaluation cannot be edited yet.</text>
+                            }
+                            else
+                            {
+                                <span class="font-icon glyphicon glyphicon-info-sign"></span> <text>The @authUser.ContextoAno self-evaluation can no longer be edited.</text>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="tbl-row">
+                    <div class="tbl-cell">
+                        <div class="alert alert-warning">
+                            <span class="font-icon glyphicon glyphicon-info-sign"></span> WATCH OUT! AFTER 1 HOUR OF INACTIVITY YOUR SESSION WILL EXPIRE.
+                        </div>
+                    </div>
+                    <div class="tbl-cell text-right">
+                        <a class="btn btn-sm btn-secondary btn-rounded" data-toggle="tooltip" data-placement="top"
+                           title="Print" href="/SelfEvaluation/Print/@Model.Id" target="_blank">
+                            <span class="glyphicon glyphicon-print"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+    }
+
+    @if (ViewBag.Viewer == "OBSERVER")
+    {
+        <header class="page-content-header">
+            <div class="container-fluid">
+
+                <div class="tbl">
+                    <div class="tbl-row">
+                        <div class="tbl-cell">
+                            <a href="@Url.Action("ListSelfEvaluation", "Observation")" class="btn btn-primary btn-rounded">
+                                <span class="glyphicon glyphicon-arrow-left"></span>
+                            </a>
+                        </div>
+                        <div class="tbl-cell">
+                            <strong>NAME: </strong>@Model.Name<strong> YEAR: </strong>@Model.Ano
+                        </div>
+                        <div class="tbl-cell text-right">
+                            <a class="btn btn-sm btn-secondary btn-rounded" data-toggle="tooltip" data-placement="top"
+                               title="Print" href="/SelfEvaluation/Print/@Model.Chapa" target="_blank">
+                                <span class="glyphicon glyphicon-print"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+
+        @*<div class="box-typical box-typical-padding">
+            <table class="table table-responsive" style="width: 70%;">
+                <tr>
+                    <td>
+                        <a href="@Url.Action("ListSelfEvaluation", "Observation")" class="btn btn-primary btn-rounded">
+                            <span class="glyphicon glyphicon-arrow-left"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <strong>NAME: </strong>
+                    </td>
+                    <td>
+                        @Model.Name
+                    </td>
+                    <td>
+                        <strong>YEAR: </strong>
+                    </td>
+                    <td>
+                        @Model.Ano
+                    </td>
+                </tr>
+            </table>
+            <div class="tbl-cell text-right">
+                <a class="btn btn-sm btn-secondary btn-rounded" data-toggle="tooltip" data-placement="top"
+                   title="Print" href="/SelfEvaluation/Print/@Model.Chapa" target="_blank">
+                    <span class="glyphicon glyphicon-print"></span>
+                </a>
+            </div>
+        </div>*@
+    }
+
+    <div class="box-typical box-typical-padding">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-info">
+                    <p>- Go over the information listed and then check the box to confirm it.</p>
+                    <p>- Use the space at the end of this document to clarify any discrepancies you may identify.</p>
+                </div>
+            </div>
+        </div>
+
+        <h6 style="margin-top: 0px;" class="m-t-lg with-border">
+            <strong>01. CTJ Events you participated.</strong>
+        </h6>
+
+        @Html.Partial(baseUrlPartials + "/_Q01CTJEvents.cshtml")
+    </div><!--.box-typical-->
+
+    <div class="box-typical box-typical-padding">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-info">
+                    <p>- Go over the information listed and then check the box to confirm it.</p>
+                    <p>- Use the space at the end of this document to clarify any discrepancies you may identify.</p>
+                </div>
+            </div>
+        </div>
+
+        <h6 style="margin-top: 0px;" class="m-t-lg with-border" id="q4">
+            <strong>02. Meetings with Supervisors.</strong>
+        </h6>
+
+        @Html.Partial(baseUrlPartials + "/_Q02CTJEvents.cshtml")
+    </div><!--.box-typical-->
+
+    <div class="box-typical box-typical-padding">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-info">
+                    <p>- Go over the information listed and then check the box to confirm it.</p>
+                    <p>- Use the space at the end of this document to clarify any discrepancies you may identify.</p>
+                </div>
+            </div>
+        </div>
+
+        <h6 style="margin-top: 0px;" class="m-t-lg with-border" id="q4">
+            <strong>03. Optional Training.</strong>
+        </h6>
+
+        @Html.Partial(baseUrlPartials + "/_Q02ACTJEvents.cshtml")
+    </div><!--.box-typical-->
+
+    <div class="box-typical box-typical-padding">
+
+        <h6 style="margin-top: 0px;" class="m-t-lg with-border" id="q6">
+            <strong>04. Degree.</strong>
+        </h6>
+        @Html.Partial(baseUrlPartials + "/_Q03Degree.cshtml")
+    </div><!--.box-typical-->
+
+    <div class="box-typical box-typical-padding">
+
+        <h6 style="margin-top: 0px;" class="m-t-lg with-border" id="q7">
+            <strong>05. Certificate of Proficiency.</strong>
+        </h6>
+
+        @Html.Partial(baseUrlPartials + "/_Q04CertificateOfProficiency.cshtml")
+    </div><!--.box-typical-->
+
+    <div class="box-typical box-typical-padding">
+
+        <h6 style="margin-top: 0px;" class="m-t-lg with-border">
+            <strong>06. Engagement in other professional development opportunities.</strong>
+        </h6>
+
+        <div class="row">
+            <div class="col-lg-12">
+                @Html.Partial(baseUrlPartials + "/_Q051ProfessionalDevelopment.cshtml", p1)
+                @Html.Partial(baseUrlPartials + "/_Q052ProfessionalDevelopment.cshtml", projectActivity1)
+                @Html.Partial(baseUrlPartials + "/_Q053ProfessionalDevelopment.cshtml", p2)
+            </div>
+        </div><!--.row-->
+    </div><!--.box-typical-->
+
+    <div class="box-typical box-typical-padding">
+
+        <h6 style="margin-top: 0px;" class="m-t-lg with-border">
+            <strong>07. Digital Literacy.</strong>
+        </h6>
+
+        @Html.Partial(baseUrlPartials + "/_Q06DigitalLiteracy.cshtml")
+
+        <h6 class="m-t-lg">
+            Digital Projects with Students - Describe the digital projects you conducted with your groups. Add the link whenever possible.
+        </h6>
+        <div class="row">
+            <div class="col-lg-12">
+                <fieldset class="form-group">
+                    <div class="col-xs-12 col-textarea-auto-avaliacao">
+                        <textarea rows="4" class="form-control" placeholder="" @if (ViewBag.Mostar == false) { <text> disabled="disabled" </text>  } id="inputDigitalProjects" disabled="disabled">@Model.DigitalProject</textarea>
+                    </div>
+                </fieldset>
+            </div>
+        </div><!--.row-->
+    </div><!--.box-typical-->
+
+    <div class="box-typical box-typical-padding">
+
+        <h6 style="margin-top: 0px;" class="m-t-lg with-border">
+            <strong>08. Professional Attitude & Commitment</strong>
+        </h6>
+
+        <div class="row">
+            <div class="col-lg-12">
+                @Html.Partial(baseUrlPartials + "/_Q07ProfessionalAttitude.cshtml", projectActivity2)
+            </div>
+        </div><!--.row-->
+    </div><!--.box-typical-->
+
+    <div class="box-typical box-typical-padding">
+
+        <h6 style="margin-top: 0px;" class="m-t-lg with-border">
+            <strong>09. Now that you have completed the information above, it's time to reflect upon your academic year and all you have achieved. The self-evaluation instrument is a powerful tool because it allows you the opportunity to highlight projects and accomplishments that might otherwise go unnoticed. Thus, please take your time to respond and be as thorough as possible.</strong>
+        </h6>
+
+        @Html.Partial(baseUrlPartials + "/_Q08Reflection.cshtml")
+    </div><!--.box-typical-->
+
+    <div class="box-typical box-typical-padding" style="text-align: right; padding-bottom: 0px;">
+        <div class="form-group">
+            @*<button class="btn btn-sm btn-secondary btn-rounded" data-toggle="tooltip" data-placement="top"
+                        title="Download">
+                    <span class="glyphicon glyphicon-download"></span>
+                </button>*@
+            <button class="btn btn-sm btn-secondary btn-rounded" data-toggle="tooltip" data-placement="top"
+                    title="Print" onclick="javascript: window.print();">
+                <span class="glyphicon glyphicon-print"></span>
+            </button>
+            @*<button class="btn btn-sm btn-secondary btn-rounded" data-toggle="tooltip" data-placement="top"
+                        title="Send by email">
+                    <span class="glyphicon glyphicon-envelope"></span>
+                </button>*@
+
+            @*<button class="btn btn-sm btn-primary btn-rounded" id="btnSelfEvalSave" data-toggle="tooltip" data-placement="top"
+                        title="Save">
+                    <span class="glyphicon glyphicon-floppy-disk"></span>
+                </button>*@
+            @*<button class="btn btn-sm btn-primary btn-rounded" data-toggle="tooltip" data-placement="top"
+                        title="Finalize">
+                    <span class="glyphicon glyphicon-ok"></span>
+                </button>*@
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalShowImagem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">Imagem</h4>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+
+    <script>
+        $(document).ready(function () {
+            $('.side-menu-list li').removeClass('active');
+            $('#sideMenuListItemSelfEvaluation').addClass('active');
+        });
+    </script>
+}

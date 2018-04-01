@@ -1,0 +1,133 @@
+﻿<div class="row">
+    <div class="col-lg-12">
+        <section class="box-typical">
+            <header class="box-typical-header">
+                <div class="tbl-row">
+                    <div class="tbl-cell tbl-cell-title">
+                        <h6 style="font-weight:normal; padding-right:8px;">Specify attendance in local, national, and international conferences - local and national Braz-TESOL, TESOL, IATEFL, AILA, others; TDC/TEFL completed in 2016 (if you have a degree); Blog post on CTJ Connected; MA Completed in 2016; Attendance in Talks/Workshops/Webinars; Taking TEFL Certificate Course or Working on MA/PhD in 2016 CTJ Planning Hub, Ed Tech Training Meetings, others courses - PLEASE PROVIDE EVIDENCE</h6>
+                    </div>
+                    <div class="tbl-cell tbl-cell-action-bordered">
+                        @*<button type="button" class="action-btn action-add" @if (ViewBag.Mostar == false) { <text>disabled="disabled" </text> } id="btnAddRowTableProfessionalDevelopment01">
+                            <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;Add
+                        </button>*@
+                    </div>
+                </div>
+
+                <div class="modal fade crud5a-modal"
+                     tabindex="-1"
+                     role="dialog"
+                     aria-labelledby="crud5a-modal"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+                                    <i class="font-icon-close-2"></i>
+                                </button>
+                                <h4 class="modal-title" id="myModalLabel">New</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form id="formCrud5a">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <fieldset class="form-group">
+                                                <label class="form-label semibold" for="inputCrud5aDate">Date</label>
+                                                <input type="text" class="form-control date-mask-input"
+                                                       placeholder="__/__/____" name="inputCrud5aDate" id="inputCrud5aDate" required date="true">
+                                                <span>MM/DD/YYYY</span>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <fieldset class="form-group">
+                                                <label class="form-label semibold" for="inputCrud5aDescription">Description</label>
+                                                <textarea name="inputCrud5aDescription" id="inputCrud5aDescription" rows="4" class="form-control" placeholder="" required></textarea>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <fieldset class="form-group">
+                                                <label class="form-label semibold" for="inputCrud5aFile">Upload</label>
+                                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                    <span class="btn btn-primary btn-file btn-block">
+                                                        <span>Click here to select the file(s)</span>
+                                                        <input type="file" id="inputCrud5aFile" name="crud5a-file" required />
+                                                    </span>
+                                                    <span class="fileinput-filename"></span>
+                                                    <span class="fileinput-new">No file chosen</span>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal" data-toggle="tooltip" data-title="Cancel" data-placement="top" disabled="disabled">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                                <button type="button" id="btnCrud5aSave" class="btn btn-rounded btn-primary ladda-button" data-toggle="tooltip" data-title="Save" data-placement="top" data-style="zoom-in" disabled="disabled">
+                                    <span class="ladda-label"><span class="glyphicon glyphicon-ok"></span></span>
+
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--.modal-->
+
+            </header>
+            <div class="">
+                <div class="table-responsive">
+                    <table class="table table-hover table-professional-development-01">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Description</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody-professional-development-01">
+
+                            @if (Model.Count == 0)
+                            {
+                                <tr>
+                                    <td colspan="3">
+                                        <div class="alert alert-warning">
+                                            There are no records.
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr class="row-table-professional-development-01" data-selfeval-ano="@item.Ano" data-selfeval-tipo="@item.Tipo" data-selfeval-nseq="@item.Nseq" data-selfeval-image="@item.Imagem.AppBasepath@item.Imagem.Basepath@item.Imagem.Filename">
+                                        <td class="table-date content-date">
+                                            @item.Data.Date.ToString("dd/MM/yyyy")
+                                        </td>
+                                        <td class="color-blue-grey-lighter content-description">@item.Description</td>
+                                        <td class="table-icon-cell text-right">
+                                            @if (@item.Imagem != null)
+                                            {
+                                                <button class="label-show-image btn btn-sm btn-info btn-rounded" data-toggle="modal" data-target=".modalShowImagem" data-appbasepath="@item.Imagem.AppBasepath" data-basepath="@item.Imagem.Basepath" data-filename="@item.Imagem.Filename" data-mime="@item.Imagem.Mime">
+                                                    <i class="glyphicon glyphicon-picture"></i>
+                                                </button>
+                                            }
+                                            <button class="label-remove btn btn-sm btn-danger btn-rounded" disabled="disabled">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div><!--.box-typical-body-->
+        </section><!--.box-typical-->
+    </div>
+</div>

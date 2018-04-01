@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{60C0E0B3-543C-4EC5-A4B7-CB0120FE3CAC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CTJEvaluation001.Domain</RootNamespace>
+    <AssemblyName>CTJEvaluation001.Domain</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Entities\Annotation.cs" />
+    <Compile Include="Entities\AnnotationSave.cs" />
+    <Compile Include="Entities\AnnotationType.cs" />
+    <Compile Include="Entities\Auth\AuthUser.cs" />
+    <Compile Include="Entities\Competence.cs" />
+    <Compile Include="Entities\DigitalLiteracy.cs" />
+    <Compile Include="Entities\Course.cs" />
+    <Compile Include="Entities\CTJEvents.cs" />
+    <Compile Include="Entities\Class.cs" />
+    <Compile Include="Entities\Employee.cs" />
+    <Compile Include="Entities\Escala.cs" />
+    <Compile Include="Entities\Observation.cs" />
+    <Compile Include="Entities\ObservationDashboard.cs" />
+    <Compile Include="Entities\ObservationDashboardDraw.cs" />
+    <Compile Include="Entities\ObservationSave.cs" />
+    <Compile Include="Entities\ObservationSaveFinal.cs" />
+    <Compile Include="Entities\Observed.cs" />
+    <Compile Include="Entities\Observer.cs" />
+    <Compile Include="Entities\ObserverObserved.cs" />
+    <Compile Include="Entities\Performance.cs" />
+    <Compile Include="Entities\Person.cs" />
+    <Compile Include="Entities\ProjectActivity.cs" />
+    <Compile Include="Entities\ProfessionalDevelopment.cs" />
+    <Compile Include="Entities\Reflection.cs" />
+    <Compile Include="Entities\SelfEvalSave.cs" />
+    <Compile Include="Entities\SelfEvaluation.cs" />
+    <Compile Include="Entities\FileUpload.cs" />
+    <Compile Include="Entities\System\MenuAction.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Interfaces\Repositories\Auth\IAuthUserRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IAnnotationTypeRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IEmployeeRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IObservationRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IObservedRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IObserverRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IPersonRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IRepositoryBase.cs" />
+    <Compile Include="Interfaces\Repositories\ISelfEvaluationRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IFileUploadRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IUserRepository.cs" />
+    <Compile Include="Interfaces\Services\Auth\IAuthUserService.cs" />
+    <Compile Include="Interfaces\Services\IAnnotationTypeService.cs" />
+    <Compile Include="Interfaces\Services\IEmployeeService.cs" />
+    <Compile Include="Interfaces\Services\IObservedService.cs" />
+    <Compile Include="Interfaces\Services\IObserverService.cs" />
+    <Compile Include="Interfaces\Services\ISelfEvaluationService.cs" />
+    <Compile Include="Interfaces\Services\IObservationService.cs" />
+    <Compile Include="Interfaces\Services\IServiceBase.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AnnotationTypeService.cs" />
+    <Compile Include="Services\Auth\AuthUserService.cs" />
+    <Compile Include="Services\EmployeeService.cs" />
+    <Compile Include="Services\ObservationService.cs" />
+    <Compile Include="Services\ObservedService.cs" />
+    <Compile Include="Services\ObserverService.cs" />
+    <Compile Include="Services\SelfEvaluationService.cs" />
+    <Compile Include="Services\ServiceBase.cs" />
+    <Compile Include="Entities\FinalComments.cs" />
+    <Compile Include="Entities\TeacherObservationReport.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

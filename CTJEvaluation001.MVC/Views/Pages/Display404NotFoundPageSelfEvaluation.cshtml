@@ -1,0 +1,24 @@
+﻿@{ 
+    CTJEvaluation001.Domain.Entities.Auth.AuthUser authUser = HttpContext.Current.Session["user"] as CTJEvaluation001.Domain.Entities.Auth.AuthUser;
+}
+<div class="container-fluid">
+    <header class="section-header" id="header">
+        <div class="tbl">
+            <div class="tbl-row">
+                <div class="tbl-cell">
+                    <div class="alert alert-info">
+                        @if (authUser.ContextoAno == 2017)
+                        {
+                            <span class="font-icon glyphicon glyphicon-info-sign"></span> <text>The @authUser.ContextoAno self-evaluation cannot be edited yet.</text>
+                        }
+                        else
+                        {
+                            <span class="font-icon glyphicon glyphicon-info-sign"></span> <text>The @authUser.ContextoAno self-evaluation can no longer be edited.</text>
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </header>
+</div>

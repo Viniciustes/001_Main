@@ -1,0 +1,214 @@
+﻿@{ 
+    CTJEvaluation001.Domain.Entities.Auth.AuthUser authUser = HttpContext.Current.Session["user"] as CTJEvaluation001.Domain.Entities.Auth.AuthUser;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - CTJEvaluation</title>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/Content/img/favicons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/Content/img/favicons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/Content/img/favicons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/Content/img/favicons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/Content/img/favicons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/Content/img/favicons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/Content/img/favicons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/Content/img/favicons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/Content/img/favicons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/Content/img/favicons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/Content/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/Content/img/favicons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/Content/img/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/Content/img/favicons/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    @Styles.Render("~/Content/css/ladda/ladda.min.css")
+    @Styles.Render("~/Content/css/main.css")
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/r-2.1.1/datatables.min.css" />
+    @Styles.Render("~/Content/css/custom.css")
+    @Styles.Render("~/Content/css/font-awesome/font-awesome.min.css")
+    @Styles.Render("~/Content/css/sweetalert/sweetalert.css")
+    @Scripts.Render("~/bundles/modernizr")    
+    
+</head>
+<body class="with-side-menu">
+    <header class="site-header">
+        <div class="container-fluid">
+            <a href="@Url.Action("Index", "Home")" class="site-logo">
+                <img class="hidden-md-down" src="@Url.Content("~/Content/img/logo-erp-portal.png")" alt="">
+                <img class="hidden-lg-up" src="@Url.Content("~/Content/img/logo-erp-portal-mob.png")" alt="">
+            </a>
+            <button class="hamburger hamburger--htla" style="z-index: 100;">
+                <span>toggle menu</span>
+            </button>
+            <div class="site-header-content">
+                <div class="site-header-content-in">
+                    <div class="site-header-shown">
+                        <div class="dropdown user-menu">
+                            <button class="dropdown-toggle" id="dd-user-menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="@Url.Content("~/Content/img/avatar-2-256.png")" alt="">
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
+                                <a class="dropdown-item" href="@Url.Action("LogOff", "Account")"><span class="font-icon glyphicon glyphicon-log-out"></span>Sign Out</a>
+                            </div>
+                        </div>
+                    </div><!--.site-header-shown-->
+                    <div class="mobile-menu-right-overlay"></div>
+                    @if (authUser.Codperfil != "CTJE.Anotador")
+                    {
+                        <div class="">
+                            <div class="">
+                                <div class="dropdown dropdown-typical" id="div-dd-header-ano">
+                                    <a class="dropdown-toggle" id="dd-header-ano" data-target="#" href="#"
+                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="font-icon span-sel-ano"> Select the year: </span>
+                                        <span class="lbl span-sel-ano-mob">Year</span>
+                                        @authUser.ContextoAno
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dd-header-sales" id="indicadores-ano">
+                                        <a class="dropdown-item" href="#" id="2017">
+                                            <input type="radio" name="indicador-ano" value="2017" @if (authUser.ContextoAno == 2017) { <text> checked="checked" </text>    }> 2017
+                                        </a>
+                                        <a class="dropdown-item" href="#" id="2016">
+                                            <input type="radio" name="indicador-ano" value="2016" @if (authUser.ContextoAno == 2016) { <text> checked="checked" </text>   }> 2016
+                                        </a>
+                                        <a class="dropdown-item" href="#" id="2015">
+                                            <input type="radio" name="indicador-ano" value="2015" @if (authUser.ContextoAno == 2015) { <text> checked="checked" </text>   }> 2015
+                                        </a>
+                                    </div>
+                                </div>
+                            </div><!--.site-header-collapsed-in-->
+                        </div><!--.site-header-collapsed-->
+                    }
+                </div><!--site-header-content-in-->
+            </div><!--.site-header-content-->
+        </div><!--.container-fluid-->
+
+    </header><!--.site-header-->
+
+    <div class="mobile-menu-left-overlay"></div>
+    <nav class="side-menu">
+        <ul class="side-menu-list">
+            @if (authUser.Codperfil == "CTJE.Teacher")
+            {
+                <li class="purple" id="sideMenuListItemObservations">
+                    <a href="@Url.Action("Index", "Home")">
+                        <span class="glyphicon glyphicon-edit"></span>
+                        <span class="lbl">Observations</span>
+                    </a>
+                </li>
+                <li class="red" id="sideMenuListItemSelfEvaluation">
+                    <a href="@Url.Action("Index", "SelfEvaluation")">
+                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                        <span class="lbl">Self-evaluation</span>
+                    </a>
+                </li>
+            }
+            @if (authUser.Codperfil == "CTJE.Anotador")
+            {
+                <li class="purple" id="sideMenuListItemAnnotation">
+                    <a href="@Url.Action("Index", "Annotation")">
+                        <span class="glyphicon glyphicon-cog"></span>
+                        <span class="lbl">Evaluation notes</span>
+                    </a>
+                </li>
+            }
+            @if (authUser.Codperfil == "CTJE.Observador")
+            {
+                <li class="purple" id="sideMenuListItemObservations">
+                    <a href="@Url.Action("Index", "Observation")">
+                        <span class="glyphicon glyphicon-edit"></span>
+                        <span class="lbl">Observations</span>
+                    </a>
+                </li>
+                <li class="red" id="sideMenuListItemSelfEvaluation">
+                    <a href="@Url.Action("ListSelfEvaluation", "Observation")">
+                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                        <span class="lbl">Self-evaluation</span>
+                    </a>
+                </li>
+                <li class="purple" id="sideMenuListItemAnnotation">
+                    <a href="@Url.Action("Index", "Annotation")">
+                        <span class="glyphicon glyphicon-cog"></span>
+                        <span class="lbl">Evaluation notes</span>
+                    </a>
+                </li>
+            }
+            
+        </ul>
+
+    </nav>
+
+    <div class="page-content">
+        @RenderBody()
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.validate-vsdoc.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    @*<script src="~/Scripts/respond.min.js"></script>*@
+    <script src="~/Scripts/sweetalert/sweetalert.min.js"></script>
+    @Scripts.Render("~/Scripts/plugins.js")
+    @Scripts.Render("~/Scripts/app.js")
+    @Scripts.Render("~/Scripts/custom.js")
+    @Scripts.Render("https://www.gstatic.com/charts/loader.js")
+    <script src="~/Scripts/input-mask/jquery.mask.min.js"></script>
+    <script src="~/Scripts/input-mask/input-mask-init.js"></script>
+    <script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
+    <script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
+    @Scripts.Render("~/Scripts/ladda/spin.min.js")
+    @Scripts.Render("~/Scripts/ladda/ladda.min.js")
+    @Scripts.Render("~/Scripts/ladda/ladda.jquery.min.js")
+    @Scripts.Render("~/Scripts/moment.js")
+    @Scripts.Render("~/Scripts/selfEvaluationFunctions.js")
+    @Scripts.Render("~/Scripts/observationFunctions.js")
+    @Scripts.Render("~/Scripts/annotationFunctions.js")
+    @Scripts.Render("~/Scripts/utils.js")
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/v/bs/r-2.1.1/datatables.min.js"></script>
+    @RenderSection("scripts", required: false)
+
+    <script>
+        $(document).ready(function () {
+
+            $("#listSelfEvaluationTable").DataTable({
+                "order": [[1, "asc"]]
+            });
+
+            $("#listObservationTable").DataTable({
+                "order": [[2, "asc"], [1, "asc"]]
+            });
+
+            $('[data-toggle="tooltip"]').tooltip();
+
+            setInterval(function() {
+                $.ajax(
+                {
+                    type: 'GET',
+                    url: '/Account/IsAuthenticated',
+                    complete: function (data) {
+                        if (data.responseText != 'True') {
+                            setTimeout(function () {
+                                window.location.href = "/Account/Login";
+                            }, 1900);
+                            swal({
+                                title: "Sua sessão expirou!",
+                                text: "Você será redirecionado para tela de login.",
+                                timer: 2000,
+                                showConfirmButton: false
+                            });
+                        }
+                    }
+                });
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
